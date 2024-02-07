@@ -9,6 +9,7 @@ export const apiEndPoints = {
     postVerifyLogin:'/api/user/verifyLogin',
 
     //artist endpoints
+    getCategories: "/api/artist/getCategories",
     postArtistRegister: "/api/artist/artistRegister",
 
 }

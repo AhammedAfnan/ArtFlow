@@ -22,3 +22,16 @@ export const userRequest = async ({ ...options }) => {
     };
     return user(options).then(onSuccess).catch(onError);
   };
+
+  export const ArtistRequest = async ({...options }) => {
+    // the Authorization header
+    user.defaults.headers.common.Authorization = JSON.parse(
+      localStorage.getItem("artistToken")
+    );
+    const onSuccess = (response) => response;
+    const onError = (error) => {
+      console.log('axios interceptor',error);
+      return error;
+    };
+    return user(options).then(onSuccess).catch(onError)
+  }
