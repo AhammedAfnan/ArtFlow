@@ -76,4 +76,3 @@ const initialState = {
   
   export const { loginPending, loginSuccess, loginReject, logoutArtist,updateArtist } =
     ArtistAuthSlice.actions;
-  export default ArtistAuthSlice.reducer;

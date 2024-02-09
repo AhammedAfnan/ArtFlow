@@ -6,8 +6,8 @@ import { ArtistAuthSlice } from './ArtistAuthSlice'
 const store = configureStore({
     reducer:{
         alerts:alertSlice.reducer,
-        Auth:AuthSlice,
-        ArtistAuth:ArtistAuthSlice,
+        Auth:AuthSlice.reducer,
+        ArtistAuth:ArtistAuthSlice.reducer,
     },
 })
 

@@ -9,6 +9,7 @@ export const ServerVariables = {
 
     Login:'/login',
     Register: "/register",
+    userHome:"/userHome",
 
     //artistRoutes
     ArtistLogin:'/artistLogin',

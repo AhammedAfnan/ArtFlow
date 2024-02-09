@@ -1,6 +1,7 @@
 // eni aintokke routes eede eidnne .. backend le userRoutes page polthe frontend nte
 
 import React from 'react'
+import Toaster from 'react-hot-toast'
 import { useSelector } from 'react-redux';
 import {Routes,Route} from 'react-router-dom';
 import { ServerVariables } from './ServerVariables';
@@ -11,6 +12,9 @@ import ArtistLogin from '../pages/Artist/ArtistLogin';
 import AdminLogin from '../pages/Admin/AdminLogin';
 import LandingPage from '../pages/LandingPage';
 import ErrorPage from '../pages/404ErrorPage';
+import IsLoggedOutUser from '../components/middlewares/IsLoggedOutUser';
+import IsLoggedUser from '../components/middlewares/IsLoggedUser';
+import UserHome from '../pages/User/UserHome';
 
 
 function AppRoutes () {
@@ -54,10 +58,14 @@ function AppRoutes () {
 
         
         //userRoutes
+        <Route element={<IsLoggedOutUser/>}>
+          <Route path={ServerVariables.Register} element={<RegisterPage/>}/>
+          <Route path={ServerVariables.Login} element={<LoginPage/>}/>
+        </Route>
 
-        <Route path={ServerVariables.Register} element={<RegisterPage/>}/>
-        <Route path={ServerVariables.Login} element={<LoginPage/>}/>
-
+        <Route element={<IsLoggedUser/>}>
+           <Route path={ServerVariables.userHome} element={<UserHome/>}/>
+        </Route>
 
         //artistRoutes
         <Route path={ServerVariables.ArtistRegister} element={<ArtistRegister/>}/>
