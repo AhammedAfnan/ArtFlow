@@ -32,7 +32,6 @@ const initialState = {
         localStorage.setItem("artistInfo", JSON.stringify(action.payload.artist));
         localStorage.setItem("artistToken", JSON.stringify(action.payload.token));
         state.message = action.payload.success;  //ee payload um ariyano
-        state.role = action?.payload?.user?.role  // idenda sambavam
       },
       loginReject: (state, action) => {
         state.isLoading = false;
