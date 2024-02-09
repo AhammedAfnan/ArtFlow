@@ -11,5 +11,5 @@ export const apiEndPoints = {
     //artist endpoints
     getCategories: "/api/artist/getCategories",
     postArtistRegister: "/api/artist/artistRegister",
-
+    postArtistVerifyLogin:"/api/artist/artistVerifyLogin",
 }
