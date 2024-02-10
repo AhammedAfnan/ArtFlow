@@ -1,7 +1,30 @@
 import React from 'react'
+import * as Yup from "yup";
+import { useFormik } from "formik";
+import { useDispatch } from "react-redux";
 import MyButton from '../../components/MyButton';
 
+const loginSchema = Yup.object().shape({
+  email:Yup.string().email("Invalid Email").required("Email is required"),
+  password:Yup.string()
+    .min(6,"Password must be atleast 6 characters")
+    .required("Password is required")
+})
+
 const AdminLogin = () => {
+  const dispatch = useDispatch()
+
+  const formik = useFormik({
+    initialValues:{
+      email:'',
+      password:'',
+    },
+    validationSchema:loginSchema,
+    onSubmit:(values)=>{
+      dispatch()
+    }
+  })
+
     return (
         <div className="flex items-center justify-center h-screen">
           <div className="bg-black text-white p-8 rounded shadow-md w-96 text-center">

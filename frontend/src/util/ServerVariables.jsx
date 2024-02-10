@@ -15,4 +15,7 @@ export const ServerVariables = {
     //artistRoutes
     ArtistLogin:'/artistLogin',
     ArtistRegister:'/artistRegister',
+
+    //Admin Routes
+    AdminLogin:'/adminLogin',
 }

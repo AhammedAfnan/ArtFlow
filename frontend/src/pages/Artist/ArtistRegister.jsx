@@ -42,12 +42,12 @@ const ArtistRegister = () => {
     category:'',
   },
   validationSchema:Yup.object({
-    name:Yup.string().required("Required"),
+    name:Yup.string().required("Name Required"),
   mobile:Yup.string()
   .min(10, "Mobile number must be 10 digits")
   .max(10, "Mobile number must be 10 digits")
   .required("Mobile number is required"),
-  email: Yup.string().email("Invalid email address").required("Required"),
+  email: Yup.string().email("Invalid email address").required("Email Required"),
       password: Yup.string()
         .min(6, "Password must be at least 6 characters")
         .required("Password is required"),
@@ -58,7 +58,7 @@ const ArtistRegister = () => {
       worksDone: Yup.string(),
       interest: Yup.string(),
       qualification: Yup.string(),
-      language: Yup.string().required("Required"),
+      language: Yup.string().required("Language Required"),
       category: Yup.string().required("Field is required"),
   }),
   onSubmit:(values) =>{

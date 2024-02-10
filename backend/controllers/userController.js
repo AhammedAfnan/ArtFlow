@@ -1,11 +1,11 @@
 require('dotenv').config()
 const User = require('../models/user/userModel'),
-    jwt = require('jsonwebtoken')
+    jwt = require('jsonwebtoken');
+const catchAsync = require('../util/catchAsync');
     bcrypt = require('bcrypt'),
     otpTemplate = require('../util/otpTemplate'),
     Mail = require('../util/otpMailer'),
-    randomString = require('randomstring'),
-    catchAsync = require('../util/catchAsync')
+    randomString = require('randomstring')
 
     exports.register = catchAsync(async(req,res)=>{
         const {name,mobile,email,password}= req.body;
@@ -94,4 +94,32 @@ const User = require('../models/user/userModel'),
             expiresIn:'1d',
         })
         return res.status(200).json({success:"Login Successfull",token,user})
+    })
+
+    exports.ResendOtp = catchAsync(async(req,res)=>{
+        if(!req.body.email){
+            return res.json({error:"email not found!"})
+        }
+        const user = await User.findOne({email:req.body.email})
+
+        const newOtp = randomString.generate({
+            length:4,
+            charset:"numeric",
+        })
+        const options = {
+            from:process.env.Email,
+            to:req.body.email,
+            subject:"Arthub verification otp",
+            html:otpTemplate(newOtp)
+        };
+        await Mail.sendMail(options)
+            .then((res)=>console.log('otp sended'))
+            .catch((err)=>console.log(err.message))
+
+            user.otp.code = newOtp;
+            user.otp.generatedAt = Date.now()
+            await user.save()
+            return res
+                .status(200)
+                .json({success:"Otp Resended",email:req.body.email})
     })
