@@ -35,3 +35,18 @@ export const userRequest = async ({ ...options }) => {
     };
     return user(options).then(onSuccess).catch(onError)
   }
+
+  export const adminRequest = async ({ ...options }) => {
+    user.defaults.headers.common.Authorization = ''
+    const onSuccess = (response) => response;
+    const onError = (error ) => {
+      console.log("axios interceptor",error)
+      return error;
+    }
+    try {
+      const response = await user(options)
+      return onSuccess(response)
+    } catch (error) {
+      return onError(error)
+    }
+  }

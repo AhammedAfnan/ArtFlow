@@ -14,4 +14,7 @@ export const apiEndPoints = {
     getCategories: "/api/artist/getCategories",
     postArtistRegister: "/api/artist/artistRegister",
     postArtistVerifyLogin:"/api/artist/artistVerifyLogin",
+
+     //admin endpoints
+    postAdminLogin: "/api/admin/postAdminLogin",
 }
