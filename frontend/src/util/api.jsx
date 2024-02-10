@@ -6,7 +6,9 @@ export const apiEndPoints = {
 
     // user endPoints
     postRegisterData:'/api/user/register',
+    postVerifyOtp: "/api/user/verifyOtp",
     postVerifyLogin:'/api/user/verifyLogin',
+    postResendOtp: "/api/user/resendOtp",
 
     //artist endpoints
     getCategories: "/api/artist/getCategories",

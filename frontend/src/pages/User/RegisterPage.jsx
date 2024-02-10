@@ -49,7 +49,6 @@ const RegisterPage = () => {
       .then((response)=>{
         dispatch(hideLoading())
         if(response.data.success) {
-          console.log(response.data + 'just engane aan id nn ariyan')
           navigate(ServerVariables.verifyOtp,{
             state:{email:response.data.email},  // id verifyOtp k state-email aaknne thonn
           });

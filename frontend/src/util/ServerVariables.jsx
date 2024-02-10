@@ -9,6 +9,7 @@ export const ServerVariables = {
 
     Login:'/login',
     Register: "/register",
+    verifyOtp:'/verifyOtp',
     userHome:"/userHome",
 
     //artistRoutes

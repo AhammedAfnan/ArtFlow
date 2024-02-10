@@ -4,5 +4,7 @@ const express = require('express'),
 
 userRouter
     .post('/register',userController.register)
+    .post("/verifyOtp", userController.verifyOtp)
+    .post("/verifyLogin", userController.verifyLogin)
 
 module.exports = userRouter;

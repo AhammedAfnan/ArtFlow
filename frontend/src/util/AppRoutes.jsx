@@ -8,6 +8,7 @@ import { ServerVariables } from './ServerVariables';
 import RegisterPage from '../pages/User/RegisterPage';
 import LoginPage from '../pages/User/LoginPage';
 import ArtistRegister from '../pages/Artist/ArtistRegister';
+import OtpVerification from "../pages/User/OtpRegister";
 import ArtistLogin from '../pages/Artist/ArtistLogin';
 import AdminLogin from '../pages/Admin/AdminLogin';
 import LandingPage from '../pages/LandingPage';
@@ -60,6 +61,10 @@ function AppRoutes () {
         //userRoutes
         <Route element={<IsLoggedOutUser/>}>
           <Route path={ServerVariables.Register} element={<RegisterPage/>}/>
+          <Route path={ServerVariables.verifyOtp} element={<OtpVerification />}/>
+            
+ 
+            
           <Route path={ServerVariables.Login} element={<LoginPage/>}/>
         </Route>
 
