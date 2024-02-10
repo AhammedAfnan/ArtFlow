@@ -37,7 +37,7 @@ export const userRequest = async ({ ...options }) => {
   }
 
   export const adminRequest = async ({ ...options }) => {
-    user.defaults.headers.common.Authorization = ''
+    user.defaults.headers.common.Authorization = `Bearer ${localStorage.getItem("adminToken")}`;
     const onSuccess = (response) => response;
     const onError = (error ) => {
       console.log("axios interceptor",error)

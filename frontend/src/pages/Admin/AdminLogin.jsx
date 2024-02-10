@@ -72,9 +72,9 @@ const AdminLogin = () => {
             <p className="text-sm font-bold text-red-600">
               {formik.errors.password}
             </p>
-          )}s
+          )}
               <div className="flex items-center justify-center">
-                <MyButton text="Login" />
+                <MyButton text="Login" type='submit'/>
               </div>
             </form>
           </div>

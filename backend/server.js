@@ -2,6 +2,9 @@ const express = require('express');
 const path = require('path')
 const cors = require('cors')
 const userRoute = require('./routes/userRoutes')
+const adminRoutes = require("./routes/adminRoutes");
+
+
 const {mongoConnect} = require('./config/db')
 require('dotenv').config()
 const app = express()
@@ -18,7 +21,13 @@ app.use(express.json())
 app.use(express.urlencoded({extended:true}))
 app.use(express.static(path.join(__dirname,'public')));
 
+// user
 app.use('/api/user',userRoute)
+
+
+// admin
+app.use("/api/admin", adminRoutes);
+
 
 const port = process.env.PORT || 8000;
 const server = http.listen(port,()=>{
