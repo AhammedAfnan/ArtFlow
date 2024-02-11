@@ -3,6 +3,7 @@ const path = require('path')
 const cors = require('cors')
 const userRoute = require('./routes/userRoutes')
 const adminRoutes = require("./routes/adminRoutes");
+const artistRoutes = require("./routes/artistRoutes");
 
 
 const {mongoConnect} = require('./config/db')
@@ -27,6 +28,10 @@ app.use('/api/user',userRoute)
 
 // admin
 app.use("/api/admin", adminRoutes);
+
+
+// //artist
+app.use("/api/artist", artistRoutes);
 
 
 const port = process.env.PORT || 8000;

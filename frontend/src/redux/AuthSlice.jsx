@@ -51,7 +51,7 @@ export const AuthSlice = createSlice ({
     },
 }) 
 
-// thunk middleware dispatch argument aayt edukkum...
+// thunk middleware takes dispatch as argument...
 
 export const loginThunk = (data) => async (dispatch) => {
     try {
@@ -59,7 +59,7 @@ export const loginThunk = (data) => async (dispatch) => {
         dispatch(loginPending())
         const res = await userRequest({
             url:apiEndPoints.postVerifyLogin,
-            method:post,
+            method:"post",
             data:data,
         })
         dispatch(hideLoading())
