@@ -2,7 +2,8 @@ require('dotenv').config()
 const catchAsync = require("../util/catchAsync"),
     bcrypt = require("bcrypt"),
     jwt = require("jsonwebtoken"),
-    Admin = require("../models/admin/adminModel")
+    Admin = require("../models/admin/adminModel"),
+    User = require("../models/user/userModel")
 
 
 exports.verifyAdmin = catchAsync(async(req,res)=>{
@@ -24,5 +25,24 @@ const token = jwt.sign({id:admin._id},process.env.jWT_SECRET,{
 
 return res
     .status(200)
-    .json({success:"Admin Login Successfull",token,admin})
-})
+    .json({success:"Admin Login Successfull",token,admin});
+});
+
+exports.getUsers = catchAsync(async (req, res) => {
+    const page = parseInt(req.query.page) || 1;
+    const pageSize = 2;
+    const totalUsers = await User.countDocuments();
+    const totalPages = Math.ceil(totalUsers / pageSize);
+  
+    const users = await User.find({})
+      .skip((page - 1) * pageSize)
+      .limit(pageSize)
+      .sort({ createdAt: -1 });
+  
+    return res.status(200).json({
+      success: "ok",
+      users,
+      currentPage: page,
+      totalPages,
+    });
+  });

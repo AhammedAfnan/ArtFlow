@@ -17,4 +17,6 @@ export const apiEndPoints = {
 
      //admin endpoints
     postAdminLogin: "/api/admin/postAdminLogin",
+    showUsers: '/api/admin/showUsers',
+    blockUser: "/api/admin/blockUser",
 }

@@ -19,6 +19,7 @@ import IsAdminLoggedOut from "../components/middlewares/IsAdminLoggedOut";
 import IsAdminLogged from "../components/middlewares/IsAdminLogged";
 import UserHome from '../pages/User/UserHome';
 import Dashboard from '../pages/Admin/Dashboard';
+import Users from '../pages/Admin/Users';
 
 
 function AppRoutes () {
@@ -86,6 +87,7 @@ function AppRoutes () {
     
     <Route element={<IsAdminLogged/>}>
         <Route path={ServerVariables.AdminDashboard} element={<Dashboard/>}/>
+        <Route path={ServerVariables.listUsers} element={<Users/>}/>
     </Route>
         
 

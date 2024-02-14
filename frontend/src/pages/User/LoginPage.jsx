@@ -76,7 +76,7 @@ const LoginPage = () => {
             </p>
           )}
               <div className="flex items-center justify-center">
-                <MyButton type='button' text='Login'/>
+                <MyButton type='submit' text='Login'/>
               </div>
             </form>
 

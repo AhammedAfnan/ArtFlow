@@ -74,11 +74,8 @@ const catchAsync = require('../util/catchAsync');
     })
 
     exports.verifyLogin = catchAsync(async(req,res)=>{
-        console.log('sadanam kereen ttta');
         const { email, password } = req.body;
-        console.log(email,password)
         const user = await User.findOne({email:email})
-        console.log(user)
         if (!user){
             return res.json({error:"User not found"})
         }
