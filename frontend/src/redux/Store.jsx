@@ -9,7 +9,7 @@ const store = configureStore({
         alerts:alertSlice.reducer,
         Auth:AuthSlice.reducer,
         ArtistAuth:ArtistAuthSlice.reducer,
-        AdminAuth:AdminAuthSlice,
+        AdminAuth:AdminAuthSlice.reducer,
     },
 })
 

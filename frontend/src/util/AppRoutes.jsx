@@ -15,7 +15,10 @@ import LandingPage from '../pages/LandingPage';
 import ErrorPage from '../pages/404ErrorPage';
 import IsLoggedOutUser from '../components/middlewares/IsLoggedOutUser';
 import IsLoggedUser from '../components/middlewares/IsLoggedUser';
+import IsAdminLoggedOut from "../components/middlewares/IsAdminLoggedOut";
+import IsAdminLogged from "../components/middlewares/IsAdminLogged";
 import UserHome from '../pages/User/UserHome';
+import Dashboard from '../pages/Admin/Dashboard';
 
 
 function AppRoutes () {
@@ -61,8 +64,7 @@ function AppRoutes () {
         //userRoutes
         <Route element={<IsLoggedOutUser/>}>
           <Route path={ServerVariables.Register} element={<RegisterPage/>}/>
-          <Route path={ServerVariables.verifyOtp} element={<OtpVerification />}/>
-            
+          <Route path={ServerVariables.verifyOtp} element={<OtpVerification />}/>            
  
             
           <Route path={ServerVariables.Login} element={<LoginPage/>}/>
@@ -77,8 +79,15 @@ function AppRoutes () {
         <Route path={ServerVariables.ArtistLogin} element={<ArtistLogin/>}/>
 
         //adminRoutes
-        <Route path={ServerVariables.AdminLogin} element={<AdminLogin/>}/>
 
+    <Route element={<IsAdminLoggedOut/>}>
+        <Route path={ServerVariables.AdminLogin} element={<AdminLogin/>}/>
+    </Route>
+    
+    <Route element={<IsAdminLogged/>}>
+        <Route path={ServerVariables.AdminDashboard} element={<Dashboard/>}/>
+    </Route>
+        
 
       </Routes>
     </div>

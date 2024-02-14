@@ -113,7 +113,7 @@ const ArtistRegister = () => {
                       onChange={formik.handleChange}
                       onBlur={formik.handleBlur}
                       id="name"
-                      autoComplete="name"  //what is this autocomplete
+                      autoComplete="name"
                       className={
                         formik.touched.name && formik.errors.name
                           ? "block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 border-red-500 p-2"
@@ -383,7 +383,7 @@ const ArtistRegister = () => {
                           Select a Field
                         </option>
                         {categories.map((category) => (
-                      <option key={category._id} value={category._id}>  // idedk pass cheyynnen ariyano
+                      <option key={category._id} value={category._id}>  
                         {category.name}
                       </option>           // id mansilakanam
                     ))}
