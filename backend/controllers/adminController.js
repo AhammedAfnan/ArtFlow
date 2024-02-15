@@ -46,3 +46,23 @@ exports.getUsers = catchAsync(async (req, res) => {
       totalPages,
     });
   });
+
+  exports.blockUser = catchAsync(async(req,res)=>{
+    const user = await User.findById(req.body.id);
+    const updateUser = await User.findOneAndUpdate(
+        {_id:req.body.id},
+        {$set:{isBlocked:!user.isBlocked}},
+        { new: true}
+    );
+    if (updateUser.isBlocked){
+        return res
+            .status(200)
+            .json({success:`${user.name} has blocked`,updateUser})
+    }
+    if(!updateUser.isBlocked){
+        return res
+            .status(200)
+            .json({success:`${user.name} has unblocked,updateUser`})
+    }
+    return res.json({error:"error in updating"})
+  })

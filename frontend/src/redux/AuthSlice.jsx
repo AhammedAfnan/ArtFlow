@@ -39,7 +39,7 @@ export const AuthSlice = createSlice ({
             state.errorMsg=action.payload.error;
         },
         updateUser:(state,action)=>{
-            localStorage.setItem("userInfo",JSON.stringify(action.payload))
+            localStorage.setItem("userInfo",JSON.stringify(action.payload))  
             state.user = action.payload;
         },
         logoutUser:(state,action) => {

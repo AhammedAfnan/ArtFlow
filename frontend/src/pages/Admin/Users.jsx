@@ -4,7 +4,7 @@ import { showLoading, hideLoading} from '../../redux/AlertSlice'
 import { apiEndPoints } from '../../util/api'
 import { adminRequest } from "../../Helper/instance";
 import toast from "react-hot-toast";
-import { logoutUser, updateUser } from "../../redux/AuthSlice";
+import { updateUser } from "../../redux/AuthSlice";
 import Swal from "sweetalert2";
 import DataTable from "react-data-table-component";
 import ReactPaginate from "react-paginate";
@@ -20,12 +20,12 @@ const Users = () => {
     const cols = [
         {
             name:'S1',
-            selector:(row,index) => index+1,
+            selector:(user,index) => index+1,
             sortable:true,
         },
         {
             name:"profile",
-            selector:(row) =>(
+            selector:(user) =>(
                 <img
                 className='h-10 w-10 rounded-full' 
                 src="" 
@@ -35,36 +35,36 @@ const Users = () => {
         },
         {
             name:"Name",
-            selector:(row) => row.name,
+            selector:(user) => user.name,
             sortable:true,
         },
         {
             name: "Mobile",
-            selector: (row) => row.mobile,
+            selector: (user) => user.mobile,
             sortable: true,
           },
           {
             name: "Email",
-            selector: (row) => row.email,
+            selector: (user) => user.email,
             sortable: true,
           },
           {
             name:"Verified",
-            selector:(row) => (row.isVerified ? "Yes" : "No"),
+            selector:(user) => (user.isVerified ? "Yes" : "No"),
             sortable:true,
           },
           {
             name:"Actions",
-            selector:(row) =>(
+            selector:(user) =>(
                 <button
                 className={`${
-                    row.isBlocked ? "bg-red-500" : "bg-green-500"
+                    user.isBlocked ? "bg-red-500" : "bg-green-500"
                 } text-white px-2 py-1 rounded-full w-20 md:w-24 h-8 md:h-10`}
                 onClick={()=>{
-                    blockUser(row._id);
+                    blockUser(user._id);
                 }}
                 >
-                 {row.isBlocked ? 'Blocked' : 'Block'}
+                 {user.isBlocked ? 'Blocked' : 'Block'}
                 </button>
             )
           }
@@ -94,7 +94,7 @@ const Users = () => {
     }
 
     const blockUser = async(id) => {
-      const isBlocked = users.find((user)=>user._id===id)?.isBlocked;         /// i have to more understand this ..
+      const isBlocked = users.find((user)=>user._id===id)?.isBlocked;
       const result = await Swal.fire ({
         title: isBlocked ? "Unblock Confirmation" : "Block Confirmation",
         text: isBlocked 
@@ -122,8 +122,8 @@ const Users = () => {
             toast.success(res.data.success)
             getUsers();
           }else{
-            toast.error(res.data.error)
-          }
+            toast.error(res.data.error)                     // i want to ask amjad , this two type of errors ? what will be 
+          }                                                 // that errors
         })
         .catch((err)=>{
           dispatch(hideLoading());
@@ -144,6 +144,7 @@ const Users = () => {
     }
 
     const handlePageChange = (selectedPage) =>{
+      console.log(selectedPage.selected);
       setCurrentPage(selectedPage.selected);
     }
 

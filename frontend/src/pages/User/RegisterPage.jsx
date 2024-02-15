@@ -27,7 +27,7 @@ const registerSchema = Yup.object().shape({
 const RegisterPage = () => {
   const navigate = useNavigate()
   const dispatch = useDispatch();
-  const [error,setError] = useState()
+  const [error,setError] = useState('')
   const formik = useFormik({
     initialValues: {
       name:"",
@@ -68,7 +68,7 @@ const RegisterPage = () => {
   })
   return (
     <div className="flex items-center justify-center h-screen">
-        <div className="bg-black text-white p-8 rounded shadow-md w-96 text-center">
+        <div className="bg-black text-white p-8 rounded shadow-md w-96 h-50 text-center">
         <img
           src="/images/userImages/hub1.png"
           alt="Logo"
