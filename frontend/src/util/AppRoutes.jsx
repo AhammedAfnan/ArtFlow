@@ -20,6 +20,10 @@ import IsAdminLogged from "../components/middlewares/IsAdminLogged";
 import UserHome from '../pages/User/UserHome';
 import Dashboard from '../pages/Admin/Dashboard';
 import Users from '../pages/Admin/Users';
+import Categories from '../pages/Admin/Categories'
+import AddCategory from "../pages/Admin/AddCategory";
+import EditCategory from "../pages/Admin/EditCategory";
+
 
 
 function AppRoutes () {
@@ -87,7 +91,10 @@ function AppRoutes () {
     
     <Route element={<IsAdminLogged/>}>
         <Route path={ServerVariables.AdminDashboard} element={<Dashboard/>}/>
-        <Route path={ServerVariables.listUsers} element={<Users/>}/>
+        <Route path={ServerVariables.Users} element={<Users/>}/>
+        <Route path={ServerVariables.Categories} element={<Categories/>} />
+        <Route path={ServerVariables.AddCategory} element={<AddCategory />} />
+        <Route path={ServerVariables.EditCategory} element={<EditCategory />}/>
     </Route>
         
 

@@ -8,6 +8,7 @@ import { updateUser } from "../../redux/AuthSlice";
 import Swal from "sweetalert2";
 import DataTable from "react-data-table-component";
 import ReactPaginate from "react-paginate";
+import AdminNavbar from '../../components/AdminNavbar';
 
 const Users = () => {
     const dispatch = useDispatch()
@@ -77,7 +78,7 @@ const Users = () => {
     const getUsers = async () => {
         dispatch(showLoading())
         adminRequest({
-            url:`${apiEndPoints.showUsers}?page=${currentPage+1}`,
+            url:`${apiEndPoints.Users}?page=${currentPage+1}`,
             method:"get",
         })
         .then((res)=>{
@@ -122,8 +123,8 @@ const Users = () => {
             toast.success(res.data.success)
             getUsers();
           }else{
-            toast.error(res.data.error)                     // i want to ask amjad , this two type of errors ? what will be 
-          }                                                 // that errors
+            toast.error(res.data.error)            
+          }                                                
         })
         .catch((err)=>{
           dispatch(hideLoading());
@@ -149,6 +150,8 @@ const Users = () => {
     }
 
   return (
+    <>
+    <AdminNavbar/>
     <div className="min-h-full">
     <header className="bg-white shadow">
       <div className="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8 flex flex-col sm:flex-row justify-between">
@@ -205,6 +208,7 @@ const Users = () => {
       </div>
     </main>
   </div>
+  </>
   )
 }
 

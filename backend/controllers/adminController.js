@@ -3,7 +3,8 @@ const catchAsync = require("../util/catchAsync"),
     bcrypt = require("bcrypt"),
     jwt = require("jsonwebtoken"),
     Admin = require("../models/admin/adminModel"),
-    User = require("../models/user/userModel")
+    User = require("../models/user/userModel"),
+    Category = require('../models/admin/categoryModel')
 
 
 exports.verifyAdmin = catchAsync(async(req,res)=>{
@@ -65,4 +66,77 @@ exports.getUsers = catchAsync(async (req, res) => {
             .json({success:`${user.name} has unblocked,updateUser`})
     }
     return res.json({error:"error in updating"})
+  })
+
+  exports.showCategories = catchAsync(async(req,res)=>{
+    const page = parseInt(req.query.page) || 1;
+    const pageSize = 2;
+    const totalCategories = await Category.countDocuments();
+    const totalPages = Math.ceil(totalCategories/pageSize)
+
+    const categories = await Category.find({})
+        .skip((page-1)*pageSize)
+        .limit(pageSize)
+        .sort({createdAt:-1});
+
+        if (categories) {
+            return res.status(200).json({
+                success:"ok",
+                categories,
+                currentPage:page,
+                totalPages,
+            })
+        }
+  })
+
+  exports.addCategory = catchAsync(async(req,res)=>{
+    const { name, description } = req.body;
+    const newCategory = await Category.create({
+        name,
+        description
+    });
+    if(newCategory){
+        return res
+            .status(200)
+            .json({success:`${name} field added successfully`})
+    }else{
+        return res.json({error:"failed to add new field"})
+    }
+  })
+
+  exports.deleteCategory = catchAsync(async(req,res)=>{
+    const category = await Category.findById(req.body.id);
+    const updatedCategory = await Category.findOneAndUpdate(
+        { _id:req.body.id },
+        { $set:{isDeleted:!category.isDeleted }},
+        { new: true }
+    )
+    if (updatedCategory) {
+        return res.status(200).json({success:`${category.name} has updated`})
+    }else{
+        return res.json({error:"error in updatig "})
+    }
+  })
+
+  exports.updateCategory = catchAsync(async(req,res)=>{  
+    const { name, description, id } = req.body;
+    const category = await Category.findById(id)
+    const duplicateCategories = await Category.find({
+        name:{ $ne:category.name,$regex:new RegExp("^" + name + "$", "i")},          
+    })
+    if (duplicateCategories.length){
+      return res.json({error:"category name already exists"})
+    }
+    const updateCategory = await Category.findByIdAndUpdate(
+      {_id:id},
+      {$set:{name:name, description:description}}
+    )
+  
+    if (updateCategory){c
+      return res
+          .status(200)
+          .json({success:`${name} field updated successfully `})
+    }else{
+      return res.json({error:"updating failed"})
+    }
   })

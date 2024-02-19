@@ -17,6 +17,10 @@ export const apiEndPoints = {
 
      //admin endpoints
     postAdminLogin: "/api/admin/postAdminLogin",
-    showUsers: '/api/admin/showUsers',
+    Users: '/api/admin/Users',
     blockUser: "/api/admin/blockUser",
+    showCategories: "/api/admin/showCategories",
+    postAddCategory: "/api/admin/AddCategory",
+    unlistCategory: "/api/admin/deleteCategory",
+    updateCategory: "/api/admin/updateCategory",
 }

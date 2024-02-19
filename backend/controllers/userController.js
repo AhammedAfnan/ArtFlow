@@ -106,6 +106,7 @@ const catchAsync = require('../util/catchAsync');
             length:4,
             charset:"numeric",
         })
+        
         const options = {
             from:process.env.Email,
             to:req.body.email,
