@@ -24,7 +24,7 @@ const LandingPage = () => {
         <MyButton text="USER"  onClick={()=>navigate(ServerVariables.Login)}/>
         <MyButton text="ARTIST" onClick={()=>navigate(ServerVariables.ArtistLogin)}/>
       </section>
-      {/* Featured Content */}``
+      {/* Featured Content */}
       <section className="featured-content text-center py-16">
         <h2 className="text-2xl font-bold mb-8">Featured Artworks</h2>
         <div className="flex justify-center space-x-8">

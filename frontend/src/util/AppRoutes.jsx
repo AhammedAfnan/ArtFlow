@@ -17,12 +17,18 @@ import IsLoggedOutUser from '../components/middlewares/IsLoggedOutUser';
 import IsLoggedUser from '../components/middlewares/IsLoggedUser';
 import IsAdminLoggedOut from "../components/middlewares/IsAdminLoggedOut";
 import IsAdminLogged from "../components/middlewares/IsAdminLogged";
+import IsArtistLogged from "../components/middlewares/IsArtistLogged"
+import IsArtistLoggedOut from "../components/middlewares/IsArtistLoggedOut"
 import UserHome from '../pages/User/UserHome';
 import Dashboard from '../pages/Admin/Dashboard';
 import Users from '../pages/Admin/Users';
 import Categories from '../pages/Admin/Categories'
 import AddCategory from "../pages/Admin/AddCategory";
 import EditCategory from "../pages/Admin/EditCategory";
+import ArtistOtp from '../pages/Artist/ArtistOtp';
+import ArtistHome from '../pages/Artist/ArtistHome';
+import Artists from '../pages/Admin/Artist';
+import ArtistView from '../pages/Admin/ArtistView';
 
 
 
@@ -80,9 +86,15 @@ function AppRoutes () {
         </Route>
 
         //artistRoutes
+      <Route element={<IsArtistLoggedOut/>}>
         <Route path={ServerVariables.ArtistRegister} element={<ArtistRegister/>}/>
         <Route path={ServerVariables.ArtistLogin} element={<ArtistLogin/>}/>
+        <Route path={ServerVariables.ArtistVerifyOtp} element={<ArtistOtp />}/>
+      </Route>
 
+      <Route element={<IsArtistLogged/>}>
+          <Route path={ServerVariables.ArtistHome} element={<ArtistHome/>}/>
+      </Route>
         //adminRoutes
 
     <Route element={<IsAdminLoggedOut/>}>
@@ -95,6 +107,8 @@ function AppRoutes () {
         <Route path={ServerVariables.Categories} element={<Categories/>} />
         <Route path={ServerVariables.AddCategory} element={<AddCategory />} />
         <Route path={ServerVariables.EditCategory} element={<EditCategory />}/>
+        <Route path={ServerVariables.Artists} element={<Artists />} />
+        <Route path={ServerVariables.ViewArtist} element={<ArtistView/>} />
     </Route>
         
 

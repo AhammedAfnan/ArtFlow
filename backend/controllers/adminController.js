@@ -4,7 +4,8 @@ const catchAsync = require("../util/catchAsync"),
     jwt = require("jsonwebtoken"),
     Admin = require("../models/admin/adminModel"),
     User = require("../models/user/userModel"),
-    Category = require('../models/admin/categoryModel')
+    Category = require('../models/admin/categoryModel'),
+    Artist = require('../models/artist/artistModel')
 
 
 exports.verifyAdmin = catchAsync(async(req,res)=>{
@@ -140,3 +141,57 @@ exports.getUsers = catchAsync(async (req, res) => {
       return res.json({error:"updating failed"})
     }
   })
+
+  
+  // Artists
+
+  exports.showArtists = catchAsync(async (req, res) => {
+    const page = parseInt(req.query.page) || 1;
+    const pageSize = 2;
+    const totalArtists = await Artist.countDocuments();
+    const totalPages = Math.ceil(totalArtists / pageSize);
+  
+    const artists = await Artist.find({})
+      .skip((page - 1) * pageSize)
+      .limit(pageSize)
+      .sort({ createdAt: -1 });
+  
+    return res.status(200).json({
+      success: "ok",
+      artists,
+      currentPage: page,
+      totalPages,
+    });
+  });
+
+  exports.approveArtist = catchAsync(async (req, res) => {
+    const { id } = req.body;
+    const artist = await Artist.findOne({ _id: id });
+    if (artist) {
+      artist.isApproved = true;
+      await artist.save();
+      return res.status(200).json({ success: `${artist.name} has approved` });
+    }
+    return res.json({ error: "Approval failed" });
+  });
+
+  exports.blockArtist = catchAsync(async (req, res) => {
+    const artist = await Artist.findById(req.body.id);
+    const updatedArtist = await Artist.findOneAndUpdate(
+      { _id: req.body.id },
+      { $set: { isBlocked: !artist.isBlocked } },
+      { new: true }
+    );
+    if (updatedArtist.isBlocked) {
+      return res
+        .status(200)
+        .json({ success: `${artist.name} has blocked`, updatedArtist });
+    }
+    if (!updatedArtist.isBlocked) {
+      return res
+        .status(200)
+        .json({ success: `${artist.name} has unblocked`, updatedArtist });
+    }
+    return res.json({ error: "error in updating" });
+  });
+  

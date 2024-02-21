@@ -14,4 +14,9 @@ adminRouter
   .post("/deleteCategory", adminController.deleteCategory)
   .post("/updateCategory", adminController.updateCategory)
 
+  //arists
+  .get("/showArtists", adminController.showArtists)
+  .post("/approveArtist", adminController.approveArtist)
+  .post("/blockArtist", adminController.blockArtist)
+
 module.exports = adminRouter;

@@ -15,12 +15,16 @@ export const ServerVariables = {
     //artistRoutes
     ArtistLogin:'/artistLogin',
     ArtistRegister:'/artistRegister',
+    ArtistVerifyOtp:'/artistOtp',
+    ArtistHome:'/artistHome',
 
     //Admin Routes
     AdminLogin:'/adminLogin',
     AdminDashboard:'/dashboard',
     Users:'/Users',
+    Artists:'/artists',
     Categories:'/categories',
     AddCategory:'/addCategory',
     EditCategory:'/editCategory',
+    ViewArtist:'/ViewArtist',
 }

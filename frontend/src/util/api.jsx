@@ -14,6 +14,8 @@ export const apiEndPoints = {
     getCategories: "/api/artist/getCategories",
     postArtistRegister: "/api/artist/artistRegister",
     postArtistVerifyLogin:"/api/artist/artistVerifyLogin",
+    postArtistOtp: "/api/artist/artistOtp",
+    ArtistResendOtp: "/api/artist/artistResendOtp",
 
      //admin endpoints
     postAdminLogin: "/api/admin/postAdminLogin",
@@ -23,4 +25,7 @@ export const apiEndPoints = {
     postAddCategory: "/api/admin/AddCategory",
     unlistCategory: "/api/admin/deleteCategory",
     updateCategory: "/api/admin/updateCategory",
+    blockArtist: "/api/admin/blockArtist",
+    approveArtist: "/api/admin/approveArtist",
+    showArtists: "/api/admin/showArtists",
 }

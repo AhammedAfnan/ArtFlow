@@ -33,10 +33,10 @@ const artistSchema = new mongoose.Schema({
             type:Date,
         },
     },
-    // category:{
-    //     type:ObjectId,
-    //     ref:"category"
-    // },
+    category:{
+        type:ObjectId,
+        ref:"category"
+    },
     field:{
         type:String,
         required:true,
@@ -47,7 +47,7 @@ const artistSchema = new mongoose.Schema({
     educationalQualifications:{
         type:String,
     },
-    commmunicationLanguage:{
+    communicationLanguage:{
         type:String,
         required:true,
     },

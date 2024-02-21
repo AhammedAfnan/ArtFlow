@@ -26,9 +26,9 @@ exports.register = catchAsync(async(req,res)=>{
         interest,
         qualification,
         language,
-        category
+        category,
     } = req.body;
-    const artistExists = await ArtistRegister.findOne({email});
+    const artistExists = await Artist.findOne({email});
     if(artistExists) {
         return res.json({error:"Artist already exists"})
     }
@@ -38,7 +38,7 @@ exports.register = catchAsync(async(req,res)=>{
         length:4,
         charset:"numeric",
     });
-    // const field = await
+    const field = await Category.findById(category)
     const artist = new Artist({
         name,
         mobile,
@@ -48,7 +48,7 @@ exports.register = catchAsync(async(req,res)=>{
         worksDone,
         interest,
         educationalQualifications:qualification,
-        commmunicationLanguage:language,
+        communicationLanguage:language,
         // category,
         field:field.name,
         otp:{

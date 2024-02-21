@@ -8,6 +8,6 @@ artistRouter
     .get('/getCategories',artistController.getCategories)
     .post('/artistOtp',artistController.verifyOtp)
     .post('/artistResendOtp',artistController.ResendOtp)
-    .post('artistVerifyLogin',artistController.verifyLogin)
+    .post('/artistVerifyLogin',artistController.verifyLogin)
 
 module.exports = artistRouter;

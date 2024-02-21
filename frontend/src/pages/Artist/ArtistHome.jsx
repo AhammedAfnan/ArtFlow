@@ -1,19 +1,19 @@
 import React from 'react'
 import { useSelector, useDispatch } from 'react-redux'
-import { logoutUser } from '../../redux/AuthSlice'; // Import your logout action creator
+import { logoutArtist } from '../../redux/ArtistAuthSlice'; // Import your logout action creator
 
-const UserHome = () => {
-  const { token } = useSelector(state => state.Auth);
+const ArtistHome = () => {
   const dispatch = useDispatch();
+  const { token } = useSelector(state => state.ArtistAuth);
 
   const handleLogout = () => {
     // Dispatch the logout action here
-    dispatch(logoutUser());
+    dispatch(logoutArtist());
   }
 
   return (
     <>
-      <h1>This is Home</h1>
+      <h1>This is Artist Home</h1>
       <button
         className="bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded"
         type="button"
@@ -25,4 +25,14 @@ const UserHome = () => {
   )
 }
 
-export default UserHome
+export default ArtistHome
+
+
+
+
+
+
+
+
+
+
