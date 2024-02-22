@@ -173,7 +173,6 @@ const RegisterPage = () => {
           Login
         </a>
         </p>
-        <a className='text-blue-500'>Forgot Password ?</a>
         </div>
     </div>
   )

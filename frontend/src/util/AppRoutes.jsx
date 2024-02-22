@@ -29,6 +29,9 @@ import ArtistOtp from '../pages/Artist/ArtistOtp';
 import ArtistHome from '../pages/Artist/ArtistHome';
 import Artists from '../pages/Admin/Artist';
 import ArtistView from '../pages/Admin/ArtistView';
+import VerifyEmail from '../pages/User/VerifyEmail';
+import ForgetOtp from "../pages/User/ForgetOtp";
+import ChangePassword from '../pages/User/ChangePassword';
 
 
 
@@ -75,7 +78,9 @@ function AppRoutes () {
         //userRoutes
         <Route element={<IsLoggedOutUser/>}>
           <Route path={ServerVariables.Register} element={<RegisterPage/>}/>
-          <Route path={ServerVariables.verifyOtp} element={<OtpVerification />}/>            
+          <Route path={ServerVariables.verifyOtp} element={<OtpVerification />}/>
+          <Route path={ServerVariables.verifyEmail} element={<VerifyEmail />} />     
+          <Route path={ServerVariables.forgetOtp} element={<ForgetOtp />} />       
  
             
           <Route path={ServerVariables.Login} element={<LoginPage/>}/>
@@ -109,6 +114,7 @@ function AppRoutes () {
         <Route path={ServerVariables.EditCategory} element={<EditCategory />}/>
         <Route path={ServerVariables.Artists} element={<Artists />} />
         <Route path={ServerVariables.ViewArtist} element={<ArtistView/>} />
+        <Route path={ServerVariables.changePassword } element={<ChangePassword />} />
     </Route>
         
 

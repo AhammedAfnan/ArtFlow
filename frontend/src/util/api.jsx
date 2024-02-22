@@ -9,6 +9,8 @@ export const apiEndPoints = {
     postVerifyOtp: "/api/user/verifyOtp",
     postResendOtp: "/api/user/resendOtp",
     postVerifyLogin:'/api/user/verifyLogin',
+    forgetVerifyEmail: "/api/user/verifyEmail",
+    updatePassword: "/api/user/updatePassword",
 
     //artist endpoints
     getCategories: "/api/artist/getCategories",

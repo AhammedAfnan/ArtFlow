@@ -124,3 +124,41 @@ const catchAsync = require('../util/catchAsync');
                 .status(200)
                 .json({success:"Otp Resended",email:req.body.email})
     })
+
+    exports.forgetVerifyEmail = catchAsync(async (req, res) => {
+        const { email } = req.body;
+        const user = await User.findOne({ email: email });
+        const newOtp = randomString.generate({
+          length: 4,
+          charset: "numeric",
+        });
+      
+        if (user) {
+          const options = {
+            from: process.env.EMAIL,
+            to: email,
+            subject: "ArtFlow Email verification OTP for forget password",
+            html: otpTemplate(newOtp),
+          };
+          await Mail.sendMail(options);
+          await User.findOneAndUpdate(
+            { email: email },
+            { $set: { otp: { code: newOtp, generatedAt: Date.now() } } },
+            { new: true }
+          );
+          return res.status(200).json({ success: "otp sended to your Email", email });
+        }
+      });
+
+      exports.updatePassword = catchAsync(async (req, res) => {
+        const { email, password } = req.body;
+        const user = await User.findOne({ email: email });
+        const hashPassword = await bcrypt.hash(password, 10);
+        if (user) {
+          user.password = hashPassword;
+          await user.save();
+          return res.status(200).json({ success: "password changed successfully" });
+        }
+        return res.status(200).json({ error: "password changing failed" });
+      });
+      

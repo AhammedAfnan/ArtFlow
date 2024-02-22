@@ -7,5 +7,7 @@ userRouter
     .post("/verifyOtp", userController.verifyOtp)
     .post("/verifyLogin", userController.verifyLogin)
     .post("/resendOtp", userController.ResendOtp)
+    .post("/verifyEmail", userController.forgetVerifyEmail)
+    .post("/updatePassword", userController.updatePassword)
 
 module.exports = userRouter;

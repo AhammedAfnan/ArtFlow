@@ -1,7 +1,7 @@
 // normal routes like get , not post ...
 // matte ejs l userRoutes il eidnne ade sambavo
 
-export const ServerVariables = {
+export const  ServerVariables = {
     // landing
     Landing:'/',
 
@@ -11,6 +11,9 @@ export const ServerVariables = {
     Register: "/register",
     verifyOtp:'/verifyOtp',
     userHome:"/userHome",
+    verifyEmail:'/verifyEmail',
+    forgetOtp:'/forgetOtp',
+    changePassword:'/changePassword',
 
     //artistRoutes
     ArtistLogin:'/artistLogin',
