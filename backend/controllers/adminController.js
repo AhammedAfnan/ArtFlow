@@ -5,6 +5,7 @@ const catchAsync = require("../util/catchAsync"),
     Admin = require("../models/admin/adminModel"),
     User = require("../models/user/userModel"),
     Category = require('../models/admin/categoryModel'),
+    Plan = require("../models/admin/planModel"),
     Artist = require('../models/artist/artistModel')
 
 
@@ -195,3 +196,116 @@ exports.getUsers = catchAsync(async (req, res) => {
     return res.json({ error: "error in updating" });
   });
   
+  //plans
+
+exports.showPlans = catchAsync(async (req, res) => {
+  const page = parseInt(req.query.page) || 1;
+  const pageSize = 2;
+  const totalPlans = await Plan.countDocuments();
+  const totalPages = Math.ceil(totalPlans / pageSize);
+
+  const plans = await Plan.find({})
+    .skip((page - 1) * pageSize)
+    .limit(pageSize)
+    .sort({ createdAt: -1 });
+  if (plans) {
+    return res.status(200).json({
+      success: "ok",
+      plans,
+      currentPage: page,
+      totalPages,
+    });
+  }
+});
+
+exports.addPlan = catchAsync(async (req, res) => {
+  const { name, type, description, amount } = req.body;
+  let dayDuaration;
+  if (name === "weekly") {
+    dayDuaration = type * 7;
+  }
+  if (name === "monthly") {
+    dayDuaration = type * 28;
+  }
+  if (name === "yearly") {
+    dayDuaration = type * 365;
+  }
+
+  const sameDayDuaration = await Plan.findOne({ dayDuaration: dayDuaration });
+  if (sameDayDuaration) {
+    return res.json({ error: "plan already exists" });
+  }
+
+  const newPlan = await Plan.create({
+    name,
+    type,
+    description,
+    amount,
+    dayDuaration: dayDuaration,
+  });
+  if (newPlan) {
+    return res.status(200).json({ success: `plan added successfully` });
+  } else {
+    return res.json({ error: "failed to add new plan" });
+  }
+});
+
+exports.deletePlan = catchAsync(async (req, res) => {
+  const plan = await Plan.findById(req.body.id);
+  const updatedPlan = await Plan.findOneAndUpdate(
+    { _id: req.body.id },
+    { $set: { isDeleted: !plan.isDeleted } },
+    { new: true }
+  );
+  if (updatedPlan.isDeleted) {
+    return res.status(200).json({ success: `${plan.name} has unlisted` });
+  }
+  if (!updatedPlan.isDeleted) {
+    return res.status(200).json({ success: `${plan.name} has listed` });
+  }
+  return res.json({ error: "error in updating" });
+});
+
+exports.updatePlan = catchAsync(async (req, res) => {
+  const { name, type, amount, description, id } = req.body;
+  const plan = await Plan.findById(id);
+  let dayDuaration;
+  if (name === "weekly") {
+    dayDuaration = type * 7;
+  }
+  if (name === "monthly") {
+    dayDuaration = type * 28;
+  }
+  if (name === "yearly") {
+    dayDuaration = type * 365;
+  }
+  const duplicatePlans = await Plan.find({
+    $and: [
+      { dayDuaration: dayDuaration },
+      { dayDuaration: { $ne: plan.dayDuaration } },
+    ],
+  });
+
+  if (duplicatePlans.length) {
+    return res.json({ error: "plan already exists" });
+  }
+  const updatedPlan = await Plan.findByIdAndUpdate(
+    { _id: id },
+    {
+      $set: {
+        name: name,
+        type: type,
+        amount: amount,
+        description: description,
+        dayDuaration,
+      },
+    }
+  );
+  if (updatedPlan) {
+    return res
+      .status(200)
+      .json({ success: `${name} plan updated successfully` });
+  } else {
+    return res.json({ error: "updating failed" });
+  }
+});

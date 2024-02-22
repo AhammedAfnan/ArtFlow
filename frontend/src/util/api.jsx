@@ -30,4 +30,8 @@ export const apiEndPoints = {
     blockArtist: "/api/admin/blockArtist",
     approveArtist: "/api/admin/approveArtist",
     showArtists: "/api/admin/showArtists",
+    showPlans: "/api/admin/showPlans",
+    unlistPlan: "/api/admin/deletePlan",
+    updatePlan: "/api/admin/updatePlan",
+    postAddPlan: "/api/admin/postAddPlan",
 }

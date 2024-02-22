@@ -32,6 +32,9 @@ import ArtistView from '../pages/Admin/ArtistView';
 import VerifyEmail from '../pages/User/VerifyEmail';
 import ForgetOtp from "../pages/User/ForgetOtp";
 import ChangePassword from '../pages/User/ChangePassword';
+import Plans from "../pages/Admin/Plans";
+import AddPlan from "../pages/Admin/AddPlan";
+import EditPlan from "../pages/Admin/EditPlan";
 
 
 
@@ -112,6 +115,10 @@ function AppRoutes () {
         <Route path={ServerVariables.Categories} element={<Categories/>} />
         <Route path={ServerVariables.AddCategory} element={<AddCategory />} />
         <Route path={ServerVariables.EditCategory} element={<EditCategory />}/>
+
+        <Route path={ServerVariables.Plans} element={<Plans />} />
+        <Route path={ServerVariables.AddPlan} element={<AddPlan />} />
+        <Route path={ServerVariables.Editplan} element={<EditPlan />} />
         <Route path={ServerVariables.Artists} element={<Artists />} />
         <Route path={ServerVariables.ViewArtist} element={<ArtistView/>} />
         <Route path={ServerVariables.changePassword } element={<ChangePassword />} />

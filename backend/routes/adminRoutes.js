@@ -14,6 +14,13 @@ adminRouter
   .post("/deleteCategory", adminController.deleteCategory)
   .post("/updateCategory", adminController.updateCategory)
 
+    //plans
+    .get("/showPlans",adminController.showPlans)
+    .post("/postAddPlan",adminController.addPlan)
+    .post("/deletePlan",adminController.deletePlan)
+    .post("/updatePlan",adminController.updatePlan)
+  
+
   //arists
   .get("/showArtists", adminController.showArtists)
   .post("/approveArtist", adminController.approveArtist)

@@ -30,4 +30,7 @@ export const  ServerVariables = {
     AddCategory:'/addCategory',
     EditCategory:'/editCategory',
     ViewArtist:'/ViewArtist',
+    Plans:'/plans',
+    Editplan:'/editPlan',
+    AddPlan:'/addPlan',
 }
