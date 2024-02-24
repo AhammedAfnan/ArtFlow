@@ -11,7 +11,6 @@ export const apiEndPoints = {
     postVerifyLogin:'/api/user/verifyLogin',
     forgetVerifyEmail: "/api/user/verifyEmail",
     updatePassword: "/api/user/updatePassword",
-
     //artist endpoints
     getCategories: "/api/artist/getCategories",
     postArtistRegister: "/api/artist/artistRegister",
@@ -34,4 +33,6 @@ export const apiEndPoints = {
     unlistPlan: "/api/admin/deletePlan",
     updatePlan: "/api/admin/updatePlan",
     postAddPlan: "/api/admin/postAddPlan",
+    showBanners: "/api/admin/showBanners",
+    deleteBanner: "/api/admin/deleteBanner",
 }

@@ -26,4 +26,8 @@ adminRouter
   .post("/approveArtist", adminController.approveArtist)
   .post("/blockArtist", adminController.blockArtist)
 
+  //banners
+  .get("/showBanners",adminController.showBanners)
+  .post("/deleteBanner",adminController.deleteBanner)
+
 module.exports = adminRouter;

@@ -35,7 +35,7 @@ import ChangePassword from '../pages/User/ChangePassword';
 import Plans from "../pages/Admin/Plans";
 import AddPlan from "../pages/Admin/AddPlan";
 import EditPlan from "../pages/Admin/EditPlan";
-
+import Banners from '../pages/Admin/Banners';
 
 
 function AppRoutes () {
@@ -122,6 +122,7 @@ function AppRoutes () {
         <Route path={ServerVariables.Artists} element={<Artists />} />
         <Route path={ServerVariables.ViewArtist} element={<ArtistView/>} />
         <Route path={ServerVariables.changePassword } element={<ChangePassword />} />
+        <Route path={ServerVariables.banners} element={<Banners />} />
     </Route>
         
 

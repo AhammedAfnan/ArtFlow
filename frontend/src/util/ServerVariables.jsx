@@ -1,6 +1,3 @@
-// normal routes like get , not post ...
-// matte ejs l userRoutes il eidnne ade sambavo
-
 export const  ServerVariables = {
     // landing
     Landing:'/',
@@ -33,4 +30,7 @@ export const  ServerVariables = {
     Plans:'/plans',
     Editplan:'/editPlan',
     AddPlan:'/addPlan',
+    banners:'/banners',
+    addBanner:'/addBanner',
+    editBanner:'/editBanner',
 }

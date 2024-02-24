@@ -6,7 +6,9 @@ const catchAsync = require("../util/catchAsync"),
     User = require("../models/user/userModel"),
     Category = require('../models/admin/categoryModel'),
     Plan = require("../models/admin/planModel"),
-    Artist = require('../models/artist/artistModel')
+    Artist = require('../models/artist/artistModel'),
+    Banner = require("../models/admin/BannerModel");
+
 
 
 exports.verifyAdmin = catchAsync(async(req,res)=>{
@@ -308,4 +310,44 @@ exports.updatePlan = catchAsync(async (req, res) => {
   } else {
     return res.json({ error: "updating failed" });
   }
+});
+
+exports.showBanners = catchAsync(async (req, res) => {
+  const page = parseInt(req.query.page) || 1;
+  const pageSize = 2;
+  const totalBanners = await Banner.countDocuments();
+  const totalPages = Math.ceil(totalBanners / pageSize);
+
+  const banners = await Banner.find({})
+    .skip((page - 1) * pageSize)
+    .limit(pageSize);
+  if (banners) {
+    return res.status(200).json({
+      success: "ok",
+      banners,
+      currentPage: page,
+      totalPages,
+    });
+  }
+});
+
+
+exports.deleteBanner = catchAsync(async (req, res) => {
+  const banner = await Banner.findById(req.body.id);
+  const updatedBanner = await Banner.findOneAndUpdate(
+    { _id: req.body.id },
+    { $set: { isDeleted: !banner.isDeleted } },
+    { new: true }
+  );
+  if (updatedBanner.isDeleted) {
+    return res
+      .status(200)
+      .json({ success: `${banner.title} banner has unlisted` });
+  }
+  if (!updatedBanner.isDeleted) {
+    return res
+      .status(200)
+      .json({ success: `${banner.title} banner has listed` });
+  }
+  return res.json({ error: "error in updating" });
 });

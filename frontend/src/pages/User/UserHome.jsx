@@ -1,14 +1,14 @@
 import React from "react";
 import ProfileCard from "../../components/userComponents/ProfileCd";
 import { useSelector } from "react-redux";
-import  Navbar  from '../../components/Navbar'
+// import  Navbar  from '../../components/Navbar'
 import ContactCard from "../../components/userComponents/ContactCard";
 
 const UserHome = () => {
   const { user } = useSelector((state) => state.Auth);
   return (
     <>
-      <Navbar />
+      {/* <Navbar /> */}
       <div className="flex ">
         <div className="hidden md:block w-1/4 p-6">
           <ProfileCard user={user} />
