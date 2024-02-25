@@ -1,11 +1,11 @@
 require('dotenv').config()
 const User = require('../models/user/userModel'),
-    jwt = require('jsonwebtoken');
-const catchAsync = require('../util/catchAsync');
-    bcrypt = require('bcrypt'),
-    otpTemplate = require('../util/otpTemplate'),
-    Mail = require('../util/otpMailer'),
-    randomString = require('randomstring')
+      jwt = require('jsonwebtoken'),
+      catchAsync = require('../util/catchAsync'),
+      bcrypt = require('bcrypt'),
+      otpTemplate = require('../util/otpTemplate'),
+      Mail = require('../util/otpMailer'),
+      randomString = require('randomstring')
 
     exports.register = catchAsync(async(req,res)=>{
         const {name,mobile,email,password}= req.body;
