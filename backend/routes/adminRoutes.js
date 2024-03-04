@@ -1,33 +1,40 @@
 const express = require("express")
 const adminRouter = express.Router()
 const adminController = require("../controllers/adminController")
+const uploadBanner = require("../middlewares/imageUpload/cropImage");
+const adminAuthMiddleware = require("../middlewares/Auth/adminAuth");
 
 
 adminRouter
     .post('/postAdminLogin',adminController.verifyAdmin)
-    .get('/Users',adminController.getUsers)
-    .post("/blockUser",adminController.blockUser)
+    .get('/Users',adminAuthMiddleware,adminController.getUsers)
+    .post("/blockUser",adminAuthMiddleware,adminController.blockUser)
 
      //   category
-  .get("/showCategories", adminController.showCategories)
-  .post("/addCategory", adminController.addCategory)
-  .post("/deleteCategory", adminController.deleteCategory)
-  .post("/updateCategory", adminController.updateCategory)
+  .get("/showCategories",adminAuthMiddleware,adminController.showCategories)
+  .post("/addCategory",adminAuthMiddleware,adminController.addCategory)
+  .post("/deleteCategory",adminAuthMiddleware,adminController.deleteCategory)
+  .post("/updateCategory",adminAuthMiddleware,adminController.updateCategory)
 
     //plans
-    .get("/showPlans",adminController.showPlans)
-    .post("/postAddPlan",adminController.addPlan)
-    .post("/deletePlan",adminController.deletePlan)
-    .post("/updatePlan",adminController.updatePlan)
+    .get("/showPlans",adminAuthMiddleware,adminController.showPlans)
+    .post("/postAddPlan",adminAuthMiddleware,adminController.addPlan)
+    .post("/deletePlan",adminAuthMiddleware,adminController.deletePlan)
+    .post("/updatePlan",adminAuthMiddleware,adminController.updatePlan)
   
 
   //arists
-  .get("/showArtists", adminController.showArtists)
-  .post("/approveArtist", adminController.approveArtist)
-  .post("/blockArtist", adminController.blockArtist)
+  .get("/showArtists",adminAuthMiddleware,adminController.showArtists)
+  .post("/approveArtist",adminAuthMiddleware,adminController.approveArtist)
+  .post("/blockArtist",adminAuthMiddleware,adminController.blockArtist)
 
   //banners
-  .get("/showBanners",adminController.showBanners)
-  .post("/deleteBanner",adminController.deleteBanner)
+  .get("/showBanners",adminAuthMiddleware,adminController.showBanners)
+  .post('/addBanner',
+  adminAuthMiddleware,
+  uploadBanner.uploadBannerImage,
+  uploadBanner.resizeBannerImage,
+  adminController.addBanner)
+  .post("/deleteBanner",adminAuthMiddleware,adminController.deleteBanner)
 
 module.exports = adminRouter;

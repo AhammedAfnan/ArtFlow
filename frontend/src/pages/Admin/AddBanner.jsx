@@ -80,6 +80,7 @@ function AddBanner() {
                 <input
                   type="text"
                   id="title"
+                  name="title"
                   className="mt-1 p-2 w-full border rounded-md"
                   value={title}
                   onChange={(e) => setTitle(e.target.value)}
@@ -95,6 +96,7 @@ function AddBanner() {
                 </label>
                 <textarea
                   id="description"
+                  name='description'
                   className="mt-1 p-2 w-full border rounded-md"
                   value={description}
                   onChange={(e) => setDescription(e.target.value)}

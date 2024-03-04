@@ -37,7 +37,8 @@ import AddPlan from "../pages/Admin/AddPlan";
 import EditPlan from "../pages/Admin/EditPlan";
 import Banners from '../pages/Admin/Banners';
 import AddBanner from '../pages/Admin/AddBanner';
-
+import UserProfile from "../pages/User/UserProfile";
+import EditUserProfile from "../pages/User/EditUserProfile";
 
 function AppRoutes () {
   const {loading} = useSelector((state)=>state.alerts)
@@ -92,6 +93,11 @@ function AppRoutes () {
 
         <Route element={<IsLoggedUser/>}>
            <Route path={ServerVariables.userHome} element={<UserHome/>}/>
+           <Route path={ServerVariables.userProfile} element={<UserProfile />} />
+           <Route
+            path={ServerVariables.editUserProfile}
+            element={<EditUserProfile />}
+          />
         </Route>
 
         //artistRoutes

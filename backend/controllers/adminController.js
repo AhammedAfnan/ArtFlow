@@ -331,6 +331,22 @@ exports.showBanners = catchAsync(async (req, res) => {
   }
 });
 
+exports.addBanner = catchAsync(async(req,res)=>{
+  console.log(req.body)
+  const { title, description, bannerImage } = req.body;
+  const newBanner = await Banner.create({
+    title,
+    description,
+    image:bannerImage,
+  });
+  if (newBanner) {
+    return res
+           .status(200)
+           .json({success:`${title} banner added successfully `})
+  }
+  return res.status(200).json({error:"failed in adding banner"})
+})
+
 
 exports.deleteBanner = catchAsync(async (req, res) => {
   const banner = await Banner.findById(req.body.id);

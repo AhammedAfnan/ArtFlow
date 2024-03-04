@@ -49,6 +49,14 @@ const User = require('../models/user/userModel'),
         }
     })
 
+    exports.getCurrentUser = catchAsync(async (req, res) => {
+        const currentUser = await User.findById(req.userId);
+        if (currentUser.isBlocked) {
+          return res.json({ error: "You are blocked by admin", currentUser });
+        }
+        return res.status(200).json({ success: "ok" });
+      });
+
     exports.verifyOtp = catchAsync(async(req,res)=>{
         if(!req.body.otp){
             return res.json({error:"please enter otp"})
@@ -162,3 +170,43 @@ const User = require('../models/user/userModel'),
         return res.status(200).json({ error: "password changing failed" });
       });
       
+      exports.updateUserProfile = catchAsync(async(req,res)=>{
+        console.log('yeah its coming');
+        const {name,mobile} = req.body;
+        if(req.body.userProfile){
+            const updateUser = await User.findByIdAndUpdate(
+                {_id:req.userId},
+                {
+                    $set:{
+                        name,
+                        mobile,
+                        profile:req.body.userProfile,
+                    },
+                },
+                {new : true}
+            )
+            if(updateUser){
+                return res
+                    .status(200)
+                    .json({success:"profile updated successfully",updateUser})
+            }
+        }
+        if(!req.body.userProfile){
+            const updateUser = await User.findByIdAndUpdate(
+                {_id:req.userId},
+                {
+                    $set:{
+                        name,
+                        mobile,
+                    },
+                },
+                {new:true}
+            )
+            if(updateUser){
+                return res
+                    .status(200)
+                    .json({success:"profile updated successfully",updateUser})
+            }
+        }
+        return res.status(200).json({error:"profile updating failed"})
+      })

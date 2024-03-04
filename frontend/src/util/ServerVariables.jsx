@@ -11,6 +11,8 @@ export const  ServerVariables = {
     verifyEmail:'/verifyEmail',
     forgetOtp:'/forgetOtp',
     changePassword:'/changePassword',
+    userProfile:'/userProfile',
+    editUserProfile:'/editUserProfile',
 
     //artistRoutes
     ArtistLogin:'/artistLogin',
