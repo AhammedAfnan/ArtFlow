@@ -61,7 +61,7 @@ function EditUserProfile() {
         .then((response) => {
           dispatch(hideLoading());
           if (response.data.success) {
-            dispatch(updateUser(response.data.updatedUser));
+            dispatch(updateUser(response.data.updateUser));
             navigate(ServerVariables.userProfile);
             toast.success(response.data.success);
           } else {
@@ -87,7 +87,11 @@ function EditUserProfile() {
           {error && <p className="text-red-600">{error}</p>}
           <img
             className="w-44 h-44 mx-auto rounded-full border-2 border-gray-800 "
-            src={''}
+            src={
+              selectedImage
+                ? URL.createObjectURL(selectedImage)
+                : `${BASE_URL}/userProfile/${user.profile}`
+            }
             alt=""
           />
 

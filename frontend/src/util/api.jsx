@@ -20,6 +20,9 @@ export const apiEndPoints = {
     postArtistVerifyLogin:"/api/artist/artistVerifyLogin",
     postArtistOtp: "/api/artist/artistOtp",
     ArtistResendOtp: "/api/artist/artistResendOtp",
+    editArtistProfile: "/api/artist/editArtistProfile",
+    getMySubscriptions: "/api/artist/getMySubscriptions",
+    getPlansAvailable: "/api/artist/getPlansAvailable",
 
      //admin endpoints
     postAdminLogin: "/api/admin/postAdminLogin",
@@ -39,4 +42,5 @@ export const apiEndPoints = {
     showBanners: "/api/admin/showBanners",
     addBanner: "/api/admin/addBanner",
     deleteBanner: "/api/admin/deleteBanner",
+    getSubscriptionHistory: "/api/admin/getSubscriptionHistory"
 }

@@ -2,6 +2,8 @@ require("dotenv").config();
 const catchAsync = require("../util/catchAsync"),
     bcrypt = require("bcrypt"),
     Artist = require("../models/artist/artistModel"),
+    PlansHistory = require("../models/admin/subscriptionHistoryModel"),
+    Plan = require("../models/admin/planModel"),
     otpTemplate = require("../util/otpTemplate"),
     randomString = require("randomstring"),
     Mail = require("../util/otpMailer"),
@@ -146,3 +148,94 @@ exports.ResendOtp = catchAsync(async (req, res) => {
     return res.status(200).json({ success: "Login Successfull", token, artist });
   });
   
+
+  exports.editArtistProfile = catchAsync (async(req,res)=>{
+    const {
+      name,
+      mobile,
+      experience,
+      worksDone,
+      interest,
+      qualification,
+      language,
+      category
+    } = req.body;
+    if(req.body.artistProfile){
+      const updatedArtist = await Artist.findByIdAndUpdate(
+        {_id:req.artistId },
+        {
+          $set: {
+            name,
+            mobile,
+            interest,
+            worksDone,
+            educationalQualifications:qualification,
+            YearOfExperience:experience,
+            communicationLanguage:language,
+            category,
+            profile:req.body.artistProfile,
+          },
+        },
+        {new:true}
+      )
+      return res
+        .status(200)
+        .json({success:"profile updated successfully",updatedArtist})
+    }
+    if (!req.body.artistProfile){
+      const updatedArtist = await Artist.findByIdAndUpdate(
+        { _id: req.artistId },
+        { 
+          $set:{
+            name, 
+            mobile,
+            interest,
+            worksDone,
+            educationalQualifications:qualification,
+            YearOfExperience:experience,
+            communicationLanguage:language,
+            category,
+          },
+        },
+        { new : true }
+      )
+      return res
+          .status(200)
+          .json({ success: "Profile updated successfully ", updatedArtist})
+    }
+    return res.status(200).json({error:"profile updating failed"})
+  })
+
+  exports.getMySubscriptions = catchAsync(async (req, res) => {
+    const page = parseInt(req.query.page) || 1;
+    const pageSize = 3;
+    const SubscriptionHistory = await PlansHistory.find({
+      artist: req.artistId,
+    }).countDocuments();
+    const totalPages = Math.ceil(SubscriptionHistory / pageSize);
+  
+    const histories = await PlansHistory.find({ artist: req.artistId })
+      .skip((page - 1) * pageSize)
+      .limit(pageSize)
+      .sort({ createdAt: -1 })
+      .populate("plan artist");
+  
+    return res.status(200).json({
+      success: "ok",
+      payments: histories,
+      currentPage: page,
+      totalPages,
+    });
+  });
+
+  exports.getPlansAvailable = catchAsync(async (req, res) => {
+    const plans = await Plan.find({ isDeleted: false });
+    const artist = await Artist.findById(req?.artistId);
+    let currentPlan = null;
+    currentPlan = await Plan.findById(artist.subscription.currentPlan);
+    if (currentPlan) {
+      currentPlan = currentPlan.toObject();
+      currentPlan.expiresOn = artist?.subscription?.expiresAt.toDateString();
+    }
+    return res.status(200).json({ success: "ok", plans, currentPlan });
+  });

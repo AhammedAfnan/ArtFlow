@@ -171,7 +171,6 @@ const User = require('../models/user/userModel'),
       });
       
       exports.updateUserProfile = catchAsync(async(req,res)=>{
-        console.log('yeah its coming');
         const {name,mobile} = req.body;
         if(req.body.userProfile){
             const updateUser = await User.findByIdAndUpdate(

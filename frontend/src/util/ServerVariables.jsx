@@ -19,6 +19,10 @@ export const  ServerVariables = {
     ArtistRegister:'/artistRegister',
     ArtistVerifyOtp:'/artistOtp',
     ArtistHome:'/artistHome',
+    artistProfile:'/artistProfile',
+    editArtistProfile:'/editArtistProfile',
+    plansAvailable:'/plansAvailable',
+    mySubscriptions:'/mySubscriptions',
 
     //Admin Routes
     AdminLogin:'/adminLogin',
@@ -35,4 +39,5 @@ export const  ServerVariables = {
     banners:'/banners',
     addBanner:'/addBanner',
     editBanner:'/editBanner',
+    subscriptionPlanHistory:'/subscriptionPlanHistory',
 }

@@ -37,4 +37,11 @@ adminRouter
   adminController.addBanner)
   .post("/deleteBanner",adminAuthMiddleware,adminController.deleteBanner)
 
+   //subscription history
+   .get(
+    "/getSubscriptionHistory",
+    adminAuthMiddleware,
+    adminController.getSubscriptionHistory
+  )
+
 module.exports = adminRouter;

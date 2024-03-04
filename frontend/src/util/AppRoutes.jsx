@@ -26,7 +26,6 @@ import Categories from '../pages/Admin/Categories'
 import AddCategory from "../pages/Admin/AddCategory";
 import EditCategory from "../pages/Admin/EditCategory";
 import ArtistOtp from '../pages/Artist/ArtistOtp';
-import ArtistHome from '../pages/Artist/ArtistHome';
 import Artists from '../pages/Admin/Artist';
 import ArtistView from '../pages/Admin/ArtistView';
 import VerifyEmail from '../pages/User/VerifyEmail';
@@ -39,6 +38,12 @@ import Banners from '../pages/Admin/Banners';
 import AddBanner from '../pages/Admin/AddBanner';
 import UserProfile from "../pages/User/UserProfile";
 import EditUserProfile from "../pages/User/EditUserProfile";
+import ArtistHome from "../pages/Artist/ArtistHome";
+import ArtistProfile from "../pages/Artist/ArtistProfile";
+import EditArtistProfile from "../pages/Artist/EditArtistProfile";
+import SubscriptionHistory from "../pages/Admin/SubscriptionHistory";
+import MySubscriptions from "../pages/Artist/MySubscription";
+import SubscriptionPlans from "../pages/Artist/PlansAvailable";
 
 function AppRoutes () {
   const {loading} = useSelector((state)=>state.alerts)
@@ -109,6 +114,19 @@ function AppRoutes () {
 
       <Route element={<IsArtistLogged/>}>
           <Route path={ServerVariables.ArtistHome} element={<ArtistHome/>}/>
+          <Route
+            path={ServerVariables.plansAvailable}
+            element={<SubscriptionPlans />}
+          />
+          <Route
+            path={ServerVariables.artistProfile}
+            element={<ArtistProfile />}
+          />
+          <Route
+            path={ServerVariables.editArtistProfile}
+            element={<EditArtistProfile />}
+          />
+          <Route path={ServerVariables.mySubscriptions} element={<MySubscriptions />} />
       </Route>
         //adminRoutes
 
@@ -131,6 +149,7 @@ function AppRoutes () {
         <Route path={ServerVariables.changePassword } element={<ChangePassword />} />
         <Route path={ServerVariables.banners} element={<Banners />} />
         <Route path={ServerVariables.addBanner} element={<AddBanner />} />
+        <Route path={ServerVariables.subscriptionPlanHistory} element={<SubscriptionHistory />} />
 
     </Route>
         

@@ -5,6 +5,7 @@ const catchAsync = require("../util/catchAsync"),
     Admin = require("../models/admin/adminModel"),
     User = require("../models/user/userModel"),
     Category = require('../models/admin/categoryModel'),
+    PlansHistory = require("../models/admin/subscriptionHistoryModel"),
     Plan = require("../models/admin/planModel"),
     Artist = require('../models/artist/artistModel'),
     Banner = require("../models/admin/BannerModel");
@@ -366,4 +367,25 @@ exports.deleteBanner = catchAsync(async (req, res) => {
       .json({ success: `${banner.title} banner has listed` });
   }
   return res.json({ error: "error in updating" });
+});
+
+
+exports.getSubscriptionHistory = catchAsync(async (req, res) => {
+  const page = parseInt(req.query.page) || 1;
+  const pageSize = 5;
+  const SubscriptionHistory = await PlansHistory.countDocuments();
+  const totalPages = Math.ceil(SubscriptionHistory / pageSize);
+
+  const histories = await PlansHistory.find({})
+    .skip((page - 1) * pageSize)
+    .limit(pageSize)
+    .sort({ createdAt: -1 })
+    .populate("plan artist");
+
+  return res.status(200).json({
+    success: "ok",
+    payments: histories,
+    currentPage: page,
+    totalPages,
+  });
 });
