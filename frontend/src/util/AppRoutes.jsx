@@ -44,6 +44,9 @@ import EditArtistProfile from "../pages/Artist/EditArtistProfile";
 import SubscriptionHistory from "../pages/Admin/SubscriptionHistory";
 import MySubscriptions from "../pages/Artist/MySubscription";
 import SubscriptionPlans from "../pages/Artist/PlansAvailable";
+import AboutPage from "../components/AboutPage";
+import PostPage from "../pages/Artist/ArtistPosts";
+import AddPost from "../pages/Artist/AddPost";
 
 function AppRoutes () {
   const {loading} = useSelector((state)=>state.alerts)
@@ -103,6 +106,7 @@ function AppRoutes () {
             path={ServerVariables.editUserProfile}
             element={<EditUserProfile />}
           />
+          <Route path={ServerVariables.about} element={<AboutPage />} />
         </Route>
 
         //artistRoutes
@@ -127,6 +131,8 @@ function AppRoutes () {
             element={<EditArtistProfile />}
           />
           <Route path={ServerVariables.mySubscriptions} element={<MySubscriptions />} />
+          <Route path={ServerVariables.artistPosts} element={<PostPage />} />
+          <Route path={ServerVariables.addPost} element={<AddPost />} />
       </Route>
         //adminRoutes
 

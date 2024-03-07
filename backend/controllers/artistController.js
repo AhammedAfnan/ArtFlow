@@ -8,7 +8,15 @@ const catchAsync = require("../util/catchAsync"),
     randomString = require("randomstring"),
     Mail = require("../util/otpMailer"),
     jwt = require("jsonwebtoken"),
-    Category = require("../models/admin/categoryModel")
+    paypal = require('paypal-rest-sdk')
+    Category = require("../models/admin/categoryModel"),
+    Post = require("../models/artist/postModel")
+
+    paypal.configure({
+      mode:"sandbox",
+      client_id:process.env.PAYPAL_CLIENT_ID,
+      client_secret:process.env.PAYPAL_SECRET_ID,
+    })
 
 exports.getCategories = catchAsync(async(req,res)=>{
     const categories = await Category.find({})
@@ -40,6 +48,7 @@ exports.register = catchAsync(async(req,res)=>{
         length:4,
         charset:"numeric",
     });
+    console.log(newOtp)
     const field = await Category.findById(category)
     const artist = new Artist({
         name,
@@ -238,4 +247,99 @@ exports.ResendOtp = catchAsync(async (req, res) => {
       currentPlan.expiresOn = artist?.subscription?.expiresAt.toDateString();
     }
     return res.status(200).json({ success: "ok", plans, currentPlan });
+  });
+
+  exports.subscriptionPayment = catchAsync(async(req,res)=>{
+    const { planId } = req.body;
+    const plan = await Plan.findById(planId)
+
+    const create_payment_json = {
+      intent:"sale",
+      payer:{
+        payment_method:"paypal",
+      },
+      redirect_urls:{
+        return_url:`http://localhost:5173/api/artist/successPayment?planId=${planId}&artistId=${req.artistId}`,
+        cancel_url:`http://localhost:5173/api/artist/errorPayment`
+      },
+      transactions:[
+        {
+          item_list:{
+            items:[
+              {
+                name:plan.name,
+                sku:plan._id,
+                price:plan.amount.toFixed(2),
+                currency:"USD",
+                quantity:1,
+              },
+            ],
+          },
+          amount:{
+            currency:"USD",
+            total:plan.amount.toFixed(2)
+          },
+          description:plan.description,
+        },
+      ],
+    };
+    paypal.payment.create(create_payment_json,(error,payment)=>{
+      if(error){
+        console.log(error);
+        return res.status(500).json({error:"Error creating PayPal payment"})
+      }else{
+        const approvalUrl = payment.links.find(
+          (link) => link.rel === "approval_url"
+        ).href;
+        res.json({success:"approvalUrl sented",approvalUrl})
+      }
+    })
+  })
+
+  exports.uploadPost = catchAsync(async (req, res) => {
+    console.log(req.body)
+    const { title, description, artistPost } = req.body;
+    const artistId = req.artistId;
+    const newPost = await Post.create({
+      title,
+      description,
+      postedBy: artistId,
+      image: artistPost,
+    });
+  
+    const updatedArtist = await Artist.findByIdAndUpdate(
+      { _id: artistId },
+      { $push: { posts: newPost._id } },
+      { new: true }
+    );
+  
+    if (updatedArtist) {
+      return res.status(200).json({ success: "New post added successfully" });
+    }
+    return res.status(200).json({ error: "post adding failed" });
+  });
+  
+  exports.getMyPosts = catchAsync(async (req, res) => {
+    const posts = await Post.find({ postedBy: req.artistId })
+      .sort({ createdAt: -1 })
+      .populate({
+        path: "comments",
+        populate: {
+          path: "postedBy",
+          select: "name profile", // Replace 'User' with the actual model name for the user
+        },
+      })
+      .populate("postedBy");
+    if (posts) {
+      return res.status(200).json({ success: "ok", posts });
+    }
+    return res.status(200).json({ error: "No posts available" });
+  });
+
+  exports.checkCurrentArtistBlocked = catchAsync(async (req, res) => {
+    const currentArtist = await Artist.findById(req.artistId);
+    if (currentArtist.isBlocked) {
+      return res.json({ error: "You are blocked by admin", currentArtist });
+    }
+    return res.status(200).json({ success: "ok" });
   });

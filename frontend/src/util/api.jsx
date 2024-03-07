@@ -13,6 +13,7 @@ export const apiEndPoints = {
     updatePassword: "/api/user/updatePassword",
     updateUserProfile: "/api/user/updateUserProfile",
     getCurrentUser: "api/user/getCurrentUser",
+    getAllBanners: "/api/user/getAllBanners",
 
     //artist endpoints
     getCategories: "/api/artist/getCategories",
@@ -23,6 +24,10 @@ export const apiEndPoints = {
     editArtistProfile: "/api/artist/editArtistProfile",
     getMySubscriptions: "/api/artist/getMySubscriptions",
     getPlansAvailable: "/api/artist/getPlansAvailable",
+    subscribePlan: "/api/artist/subscribePlan",
+    uploadPost: "/api/artist/uploadPost",
+    getMyPosts: "/api/artist/getMyPosts",
+    checkArtistBlocked: "/api/artist/checkArtistBlocked",
 
      //admin endpoints
     postAdminLogin: "/api/admin/postAdminLogin",

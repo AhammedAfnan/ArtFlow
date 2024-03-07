@@ -12,7 +12,6 @@ const user = axios.create({baseURL:URL.BASE_URL})
 
 export const userRequest = async ({ ...options }) => {
     //the Authorization header
-    console.log('sadanam');
     user.defaults.headers.common.Authorization = JSON.parse(  
       localStorage.getItem("UserToken")
     );

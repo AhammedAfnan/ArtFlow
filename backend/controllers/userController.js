@@ -3,6 +3,7 @@ const User = require('../models/user/userModel'),
       jwt = require('jsonwebtoken'),
       catchAsync = require('../util/catchAsync'),
       bcrypt = require('bcrypt'),
+      Banner = require("../models/admin/BannerModel"),
       otpTemplate = require('../util/otpTemplate'),
       Mail = require('../util/otpMailer'),
       randomString = require('randomstring')
@@ -209,3 +210,13 @@ const User = require('../models/user/userModel'),
         }
         return res.status(200).json({error:"profile updating failed"})
       })
+
+      exports.getAllBanners = catchAsync(async (req, res) => {
+        const banners = await Banner.find({ isDeleted: false }).sort({
+          createdAt: -1,
+        });
+        if (banners) {
+          return res.status(200).json({ success: "ok", banners });
+        }
+        return res.json({ error: "failed to get banners" });
+      });

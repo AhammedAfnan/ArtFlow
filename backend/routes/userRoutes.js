@@ -19,5 +19,6 @@ userRouter
         userController.updateUserProfile
       )
     .get("/getCurrentUser", userAuth, userController.getCurrentUser)
+    .get("/getAllBanners", userAuth, userController.getAllBanners)
 
 module.exports = userRouter;

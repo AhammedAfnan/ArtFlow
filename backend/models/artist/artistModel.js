@@ -6,6 +6,10 @@ const artistSchema = new mongoose.Schema({
         type:String,
         required:true,
     },
+    role:{
+        type:String,
+        default:"artist",
+    },
     email: {
         type: String,
         required: true,
@@ -63,6 +67,41 @@ const artistSchema = new mongoose.Schema({
         type:Boolean,
         default:false,
     },
+    payment:{
+        type:String,
+        required:false,
+    },
+    paymentHistory:[
+        {
+            date:Date,
+            expireDate:Date,
+            planName:String,
+            price:Number,
+            duration:String,
+        },
+    ],
+    isSubscribed:{
+        type:Boolean,
+        default:false,
+    },
+    subscription:{
+        transactionId:{
+            type:String,
+        },
+        currentPlan:{
+            type:ObjectId,
+            ref:"plan"
+        },
+        expireAt:{
+            type:Date,
+        },
+    },
+    profile:{
+        type:String,
+        default:"avatar.png"
+    },
+    followers:[{type:ObjectId,ref:"user"}],
+    posts:[{type:ObjectId,ref:"post"}],
 },
 {timestamps:true}
 )

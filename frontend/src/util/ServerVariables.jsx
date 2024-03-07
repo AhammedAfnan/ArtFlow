@@ -1,6 +1,7 @@
 export const  ServerVariables = {
     // landing
     Landing:'/',
+    about:'/about',
 
     //userRoutes
 
@@ -13,6 +14,7 @@ export const  ServerVariables = {
     changePassword:'/changePassword',
     userProfile:'/userProfile',
     editUserProfile:'/editUserProfile',
+    addPost:'/addPost',
 
     //artistRoutes
     ArtistLogin:'/artistLogin',
@@ -23,6 +25,7 @@ export const  ServerVariables = {
     editArtistProfile:'/editArtistProfile',
     plansAvailable:'/plansAvailable',
     mySubscriptions:'/mySubscriptions',
+    artistPosts:'/artistPosts',
 
     //Admin Routes
     AdminLogin:'/adminLogin',
