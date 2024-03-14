@@ -9,6 +9,7 @@ import Swal from "sweetalert2";
 import DataTable from "react-data-table-component";
 import ReactPaginate from "react-paginate";
 import AdminNavbar from '../../components/AdminNavbar';
+import BASE_URL from '../../config/api'
 
 const Users = () => {
     const dispatch = useDispatch()
@@ -21,51 +22,51 @@ const Users = () => {
     const cols = [
         {
             name:'S1',
-            selector:(user,index) => index+1,
+            selector:(row,index) => index+1,
             sortable:true,
         },
         {
             name:"profile",
-            selector:(user) =>(
+            selector:(row) =>(
                 <img
                 className='h-10 w-10 rounded-full' 
-                src="" 
+                src={`${BASE_URL}/userProfile/${row?.profile}`}
                 alt="image" 
                 />
             ),
         },
         {
             name:"Name",
-            selector:(user) => user.name,
+            selector:(row) => row.name,
             sortable:true,
         },
         {
             name: "Mobile",
-            selector: (user) => user.mobile,
+            selector: (row) => row.mobile,
             sortable: true,
           },
           {
             name: "Email",
-            selector: (user) => user.email,
+            selector: (row) => row.email,
             sortable: true,
           },
           {
             name:"Verified",
-            selector:(user) => (user.isVerified ? "Yes" : "No"),
+            selector:(row) => (row.isVerified ? "Yes" : "No"),
             sortable:true,
           },
           {
             name:"Actions",
-            selector:(user) =>(
+            selector:(row) =>(
                 <button
                 className={`${
-                    user.isBlocked ? "bg-red-500" : "bg-green-500"
+                    row.isBlocked ? "bg-red-500" : "bg-green-500"
                 } text-white px-2 py-1 rounded-full w-20 md:w-24 h-8 md:h-10`}
                 onClick={()=>{
-                    blockUser(user._id);
+                    blockUser(row._id);
                 }}
                 >
-                 {user.isBlocked ? 'Blocked' : 'Block'}
+                 {row.isBlocked ? 'Blocked' : 'Block'}
                 </button>
             )
           }
@@ -145,7 +146,6 @@ const Users = () => {
     }
 
     const handlePageChange = (selectedPage) =>{
-      console.log(selectedPage.selected);
       setCurrentPage(selectedPage.selected);
     }
 

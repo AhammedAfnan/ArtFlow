@@ -15,18 +15,18 @@ module.exports = async (req, res, next) => {
             error: "Authentication failed",
           });
         }
-        req.artistId = decoded?.id;
+        // req.artistId = decoded?.id;
         // const artist = await Artist.findById(req.artistId);
         // const currentDate = new Date();
         // if (artist.subscription.transactionId) {
-        //   if (artist.subscription.expiresAt < currentDate) {
-        //     await Artist.updateOne(
-        //       { _id: artist._id },
-        //       { $set: { isSubscribed: false }, $unset: { subscription: 1 } }
-        //     );
-        //   }
+          // if (artist.subscription.expireAt < currentDate) {
+            // await Artist.updateOne(
+              // { _id: artist._id },
+              // { $set: { isSubscribed: false }, $unset: { subscription: 1 } }
+            // );
+          // }
         // }
-        next();
+        // next();
       }
     );
   } catch (error) {

@@ -8,7 +8,7 @@ const catchAsync = require("../util/catchAsync"),
     randomString = require("randomstring"),
     Mail = require("../util/otpMailer"),
     jwt = require("jsonwebtoken"),
-    paypal = require('paypal-rest-sdk')
+    paypal = require('paypal-rest-sdk'),
     Category = require("../models/admin/categoryModel"),
     Post = require("../models/artist/postModel")
 
@@ -342,4 +342,106 @@ exports.ResendOtp = catchAsync(async (req, res) => {
       return res.json({ error: "You are blocked by admin", currentArtist });
     }
     return res.status(200).json({ success: "ok" });
+  });
+
+  exports.showSuccessPage = catchAsync(async (req, res) => {
+    const payerId = req.query.PayerID;
+    const paymentId = req.query.paymentId;
+    const { planId, artistId } = req.query;
+    const plan = await Plan.findById(planId);
+    const artist = await Artist.findById(artistId);
+    const execute_payment_json = {
+      payer_id: payerId,
+      transactions: [
+        {
+          amount: {
+            currency: "USD",
+            total: plan.amount,
+          },
+        },
+      ],
+    };
+  
+    paypal.payment.execute(
+      paymentId,
+      execute_payment_json,
+      async function (error, payment) {
+        if (error) {
+          console.log(error.response);
+          throw error;
+        } else {
+          const response = JSON.stringify(payment);
+          const parsedResponse = JSON.parse(response);
+          const transactionId =
+            parsedResponse.transactions[0].related_resources[0].sale.id;
+          const currentDate = new Date();
+  
+          artist.subscription = {
+            transactionId: transactionId,
+            currentPlan: planId,
+            expiresAt: new Date(
+              currentDate.getTime() + plan.dayDuaration * 24 * 60 * 60 * 1000
+            ),
+          };
+          artist.isSubscribed = true;
+          artist.paymentHistory.push({
+            planName: plan.name,
+            expireDate: new Date(
+              currentDate.getTime() + plan.dayDuaration * 24 * 60 * 60 * 1000
+            ),
+            date: currentDate,
+            price: plan.amount,
+            duration: plan.dayDuaration,
+          });
+          await artist.save();
+          await PlansHistory.create({
+            plan: plan._id,
+            artist: artistId,
+            date: currentDate,
+            transactionId: transactionId,
+            expireDate: new Date(
+              currentDate.getTime() + plan.dayDuaration * 24 * 60 * 60 * 1000
+            ),
+          });
+          return res.redirect("http://localhost:5000/successPage");
+        }
+      }
+    );
+  });
+  
+  exports.showErrorPage = catchAsync(async (req, res) => {
+    console.log("payment failed!");
+    return res.redirect("http://localhost:5000/errorPage");
+  });
+  
+  exports.getPostComments = catchAsync(async (req, res) => {
+    const post = await Post.findById(req.body.postId)
+      .populate({
+        path: "comments",
+        populate: {
+          path: "postedBy",
+          select: "name profile",
+        },
+      })
+      .populate("postedBy");
+    const comments = post.comments;
+    if (comments?.length) {
+      res.status(200).json({ success: "ok", comments });
+    }
+  });
+
+  exports.deletePost = catchAsync(async (req, res) => {
+    const { id } = req.body;
+    await Post.findByIdAndDelete(id);
+    const artist = await Artist.findByIdAndUpdate(
+      req.artistId,
+      { $pull: { posts: id } },
+      { new: true }
+    );
+  
+    if (artist) {
+      return res.status(200).json({ success: "post deleted successfully" });
+    }
+  
+    return res.status(200).json({ error: "delete post failed" });
   });

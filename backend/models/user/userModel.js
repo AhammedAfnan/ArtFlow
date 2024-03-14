@@ -34,6 +34,10 @@ userSchema = new mongoose.Schema({
     isBlocked:{
         type:Boolean,
         default:false,
+    },
+    profile:{
+        type:String,
+        default:"avatar.png"
     }
 },
 {timestamps:true}

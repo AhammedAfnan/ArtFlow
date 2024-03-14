@@ -5,7 +5,7 @@ exports.isPlanExpired = catchAsync(async (req, res, next) => {
   const artist = await Artist.findById(req.artistId);
   const currentDate = new Date();
   if (artist.subscription.transactionId) {
-    if (artist.subscription.expiresAt < currentDate) {
+    if (artist.subscription.expireAt < currentDate) {
       await Artist.updateOne(
         { _id: artist._id },
         { $set: { isSubscribed: false }, $unset: { subscription: 1 } }

@@ -15,6 +15,7 @@ export const  ServerVariables = {
     userProfile:'/userProfile',
     editUserProfile:'/editUserProfile',
     addPost:'/addPost',
+    showArtists:'/showArtists',
 
     //artistRoutes
     ArtistLogin:'/artistLogin',
@@ -26,6 +27,8 @@ export const  ServerVariables = {
     plansAvailable:'/plansAvailable',
     mySubscriptions:'/mySubscriptions',
     artistPosts:'/artistPosts',
+    successPage:'/successPage',
+    errorPage:'/errorPage',
 
     //Admin Routes
     AdminLogin:'/adminLogin',

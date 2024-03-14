@@ -405,8 +405,8 @@ const ArtistNavbar = () => {
             </div>
           </Disclosure.Panel>
           <Modal
-            isOpen={''}
-            onRequestClose={''}
+            // isOpen={''}
+            // onRequestClose={''}
             ariaHideApp={false}
             style={customStyles}
           >

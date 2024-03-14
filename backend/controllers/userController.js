@@ -6,6 +6,8 @@ const User = require('../models/user/userModel'),
       Banner = require("../models/admin/BannerModel"),
       otpTemplate = require('../util/otpTemplate'),
       Mail = require('../util/otpMailer'),
+      Artist = require("../models/artist/artistModel"),
+      ArtistNotificationModel = require("../models/artist/notificationModel"),
       randomString = require('randomstring')
 
     exports.register = catchAsync(async(req,res)=>{
@@ -220,3 +222,97 @@ const User = require('../models/user/userModel'),
         }
         return res.json({ error: "failed to get banners" });
       });
+
+      exports.followArtist = catchAsync(async (req, res) => {
+        const { artistId } = req.body;
+        const updatedArtist = await Artist.findByIdAndUpdate(
+          artistId,
+          { $push: { followers: req.userId } },
+          { new: true }
+        );
+      
+        const updatedUser = await User.findByIdAndUpdate(
+          req.userId,
+          { $push: { followings: artistId } },
+          { new: true }
+        );
+      
+        // to send notification to artist
+        const Notify = {
+          receiverId: artistId,
+          senderId: req.userId,
+          notificationMessage: `${updatedUser.name} started following you`,
+          date: new Date(),
+        };
+        const newNotification = new ArtistNotificationModel(Notify);
+        newNotification.save();
+      
+        if (updatedArtist && updatedUser) {
+          return res.status(200).json({ success: "ok", updatedUser, updatedArtist });
+        }
+        return res.status(200).json({ error: "failed" });
+      });
+      
+      exports.unFollowArtist = catchAsync(async (req, res) => {
+        const { artistId } = req.body;
+        const updatedArtist = await Artist.findByIdAndUpdate(
+          artistId,
+          { $pull: { followers: req.userId } },
+          { new: true }
+        );
+        const updatedUser = await User.findByIdAndUpdate(
+          req.userId,
+          { $pull: { followings: artistId } },
+          { new: true }
+        );
+      
+        // to send notification to artist
+        const Notify = {
+          receiverId: artistId,
+          senderId: req.userId,
+          notificationMessage: `${updatedUser.name} has stopped following you`,
+          date: new Date(),
+        };
+        const newNotification = new ArtistNotificationModel(Notify);
+        newNotification.save();
+      
+        if (updatedArtist && updatedUser) {
+          return res.status(200).json({ success: "ok", updatedUser, updatedArtist });
+        }
+        return res.status(200).json({ error: "failed" });
+      });
+      
+
+      exports.getAllArtists = catchAsync(async (req, res) => {
+        const page = parseInt(req.query.page) || 1;
+        const pageSize = 3; // Adjust the page size as needed
+        const query = {
+          isApproved: true,
+          isBlocked: false,
+          isVerified: true,
+          // isSubscribed: true
+        };
+      
+        const totalArtists = await Artist.countDocuments(query);
+        const totalPages = Math.ceil(totalArtists / pageSize);
+      
+        const artists = await Artist.find(query)
+          .skip((page - 1) * pageSize)
+          .limit(pageSize)
+          .sort({
+            "ratings.rating": -1, // Sort in descending order of rating
+            createdAt: -1, // Secondary sort by createdAt in descending order
+          });
+      
+        if (artists) {
+          return res.status(200).json({
+            success: "ok",
+            artists,
+            currentPage: page,
+            totalPages,
+          });
+        }
+      
+        return res.status(200).json({ error: "failed to fetch artists" });
+      });
+      

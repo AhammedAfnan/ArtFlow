@@ -14,6 +14,9 @@ export const apiEndPoints = {
     updateUserProfile: "/api/user/updateUserProfile",
     getCurrentUser: "api/user/getCurrentUser",
     getAllBanners: "/api/user/getAllBanners",
+    getAllArtists: "/api/user/getAllArtists",
+    followArtist: "/api/user/followArtist",
+    unFollowArtist: "/api/user/unFollowArtist",
 
     //artist endpoints
     getCategories: "/api/artist/getCategories",
@@ -27,7 +30,9 @@ export const apiEndPoints = {
     subscribePlan: "/api/artist/subscribePlan",
     uploadPost: "/api/artist/uploadPost",
     getMyPosts: "/api/artist/getMyPosts",
+    deletePost: "/api/artist/deletePost",
     checkArtistBlocked: "/api/artist/checkArtistBlocked",
+    getPostComments: "/api/artist/getPostComments",
 
      //admin endpoints
     postAdminLogin: "/api/admin/postAdminLogin",

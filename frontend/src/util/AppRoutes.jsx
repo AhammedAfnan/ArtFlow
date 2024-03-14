@@ -47,6 +47,9 @@ import SubscriptionPlans from "../pages/Artist/PlansAvailable";
 import AboutPage from "../components/AboutPage";
 import PostPage from "../pages/Artist/ArtistPosts";
 import AddPost from "../pages/Artist/AddPost";
+import ShowArtists from "../pages/User/ShowArtists";
+import PaymentFailPage from "../pages/Artist/ErrorPage";
+import PaymentSuccessPage from "../pages/Artist/SuccessPage";
 
 function AppRoutes () {
   const {loading} = useSelector((state)=>state.alerts)
@@ -107,6 +110,7 @@ function AppRoutes () {
             element={<EditUserProfile />}
           />
           <Route path={ServerVariables.about} element={<AboutPage />} />
+          <Route path={ServerVariables.showArtists} element={<ShowArtists />} />
         </Route>
 
         //artistRoutes
@@ -133,6 +137,14 @@ function AppRoutes () {
           <Route path={ServerVariables.mySubscriptions} element={<MySubscriptions />} />
           <Route path={ServerVariables.artistPosts} element={<PostPage />} />
           <Route path={ServerVariables.addPost} element={<AddPost />} />
+          <Route
+            path={ServerVariables.successPage}
+            element={<PaymentSuccessPage />}
+          />
+          <Route
+            path={ServerVariables.errorPage}
+            element={<PaymentFailPage />}
+          />
       </Route>
         //adminRoutes
 

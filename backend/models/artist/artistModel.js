@@ -67,35 +67,35 @@ const artistSchema = new mongoose.Schema({
         type:Boolean,
         default:false,
     },
-    payment:{
-        type:String,
-        required:false,
-    },
-    paymentHistory:[
-        {
-            date:Date,
-            expireDate:Date,
-            planName:String,
-            price:Number,
-            duration:String,
-        },
-    ],
-    isSubscribed:{
-        type:Boolean,
-        default:false,
-    },
-    subscription:{
-        transactionId:{
-            type:String,
-        },
-        currentPlan:{
-            type:ObjectId,
-            ref:"plan"
-        },
-        expireAt:{
-            type:Date,
-        },
-    },
+    // payment:{
+    //     type:String,
+    //     required:false,
+    // },
+    // paymentHistory:[
+    //     {
+    //         date:Date,
+    //         expireDate:Date,
+    //         planName:String,
+    //         price:Number,
+    //         duration:String,
+    //     },
+    // ],
+    // isSubscribed:{
+    //     type:Boolean,
+    //     default:false,
+    // },
+    // subscription:{
+    //     transactionId:{
+    //         type:String,
+    //     },
+    //     currentPlan:{
+    //         type:ObjectId,
+    //         ref:"plan"
+    //     },
+    //     expireAt:{
+    //         type:Date,
+    //     },
+    // },
     profile:{
         type:String,
         default:"avatar.png"

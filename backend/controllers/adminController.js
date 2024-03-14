@@ -68,7 +68,7 @@ exports.getUsers = catchAsync(async (req, res) => {
     if(!updateUser.isBlocked){
         return res
             .status(200)
-            .json({success:`${user.name} has unblocked,updateUser`})
+            .json({success:`${user.name} has unblocked`,updateUser})
     }
     return res.json({error:"error in updating"})
   })

@@ -32,17 +32,36 @@ artistRouter
       .post(
         "/uploadPost",
         artistAuthMiddleware,
-        PlanExpired.isPlanExpired,
         upload.uploadArtistPost,
         upload.resizeArtistPost,
         artistController.uploadPost
       )
       .get("/getMyPosts", artistAuthMiddleware, artistController.getMyPosts)
+      .post(
+        "/deletePost",
+        artistAuthMiddleware,
+        artistController.deletePost
+      )
       .get(
         "/checkArtistBlocked",
         artistAuthMiddleware,
         artistController.checkCurrentArtistBlocked
       )
+      .post(
+        "/getPostComments",
+        artistAuthMiddleware,
+        artistController.getPostComments
+      )
+      .post(
+        "/subscribePlan",
+        artistAuthMiddleware,
+        artistController.subscriptionPayment
+      )
+      .get(
+        "/successPayment",
+        artistController.showSuccessPage
+      )
+      .get("/errorPayment", artistController.showErrorPage)
 
   // notifications 
 
