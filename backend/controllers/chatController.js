@@ -1,6 +1,7 @@
 const express = require("express")
 const User = require("../models/user/userModel");
 const ChatMessages = require("../models/user/chatMessage");
+const catchAsync = require("../util/catchAsync");
 
 exports.getArtistUserFollow = catchAsync(async(req,res)=>{
     const user = await User.findById(req.userId).populate("followings")
@@ -86,4 +87,22 @@ exports.getChatMessages = catchAsync (async(req,res)=>{
             )
             res.status(200).json({success:"message added",Data:connection})
         }
+})
+
+exports.sendNewMessage = catchAsync(async(req,res)=>{
+    const room_id = req.body?.r_id;
+    const senderId = req?.userId;
+
+    const Data = {
+        room_id:room_id,
+        userId:req.userId,
+        senderId:senderId,
+        artistId:req.body?.newMessage,
+        time:req.body?.time,
+    };
+
+    const newData = new ChatMessages(Data)
+    const savedData = await newData.save()
+
+    res.status(200).send({success:true,data:savedData})
 })
