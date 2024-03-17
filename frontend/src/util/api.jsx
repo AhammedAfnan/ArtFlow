@@ -18,6 +18,8 @@ export const apiEndPoints = {
     followArtist: "/api/user/followArtist",
     unFollowArtist: "/api/user/unFollowArtist",
     userNotificationsCount: "api/user/userNotificationsCount",
+    getChatMessages: "api/user/getChatMessages",
+    sendNewMessage: "api/user/sendNewMessage",
 
     //artist endpoints
     getCategories: "/api/artist/getCategories",

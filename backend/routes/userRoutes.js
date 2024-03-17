@@ -32,5 +32,7 @@ userRouter
 
       // chat
     .get("/getArtistsFollowed", userAuth, chatController.getArtistsUserFollow)
+    .post("/getChatMessages", userAuth, chatController.getChatMessages)
+    .post("/sendNewMessage", userAuth, chatController.sendNewMessage)
 
 module.exports = userRouter;
