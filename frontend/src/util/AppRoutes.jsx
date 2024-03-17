@@ -50,6 +50,7 @@ import AddPost from "../pages/Artist/AddPost";
 import ShowArtists from "../pages/User/ShowArtists";
 import PaymentFailPage from "../pages/Artist/ErrorPage";
 import PaymentSuccessPage from "../pages/Artist/SuccessPage";
+import ChatWithArtist from "../pages/User/Chat";
 
 function AppRoutes () {
   const {loading} = useSelector((state)=>state.alerts)
@@ -111,6 +112,10 @@ function AppRoutes () {
           />
           <Route path={ServerVariables.about} element={<AboutPage />} />
           <Route path={ServerVariables.showArtists} element={<ShowArtists />} />
+          <Route
+            path={ServerVariables.chatWithArtist}
+            element={<ChatWithArtist />}
+          />
         </Route>
 
         //artistRoutes

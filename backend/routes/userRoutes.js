@@ -1,6 +1,7 @@
 const express = require('express'),
     userRouter = express.Router(),
     userController = require('../controllers/userController'),
+    chatController = require("../controllers/chatController"),
     userAuth = require("../middlewares/Auth/userAuth")
     upload = require("../middlewares/imageUpload/cropImage");
 
@@ -23,6 +24,13 @@ userRouter
     .get("/getAllArtists", userAuth, userController.getAllArtists)
     .post("/followArtist", userAuth, userController.followArtist)
     .post("/unFollowArtist", userAuth, userController.unFollowArtist)
+    .get(
+        "/userNotificationsCount",
+        userAuth,
+        userController.getNotificationCount
+      )
 
+      // chat
+    .get("/getArtistsFollowed", userAuth, chatController.getArtistsUserFollow)
 
 module.exports = userRouter;

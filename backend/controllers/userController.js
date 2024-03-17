@@ -4,6 +4,7 @@ const User = require('../models/user/userModel'),
       catchAsync = require('../util/catchAsync'),
       bcrypt = require('bcrypt'),
       Banner = require("../models/admin/BannerModel"),
+      Notification = require("../models/artist/notificationModel"),
       otpTemplate = require('../util/otpTemplate'),
       Mail = require('../util/otpMailer'),
       Artist = require("../models/artist/artistModel"),
@@ -316,3 +317,14 @@ const User = require('../models/user/userModel'),
         return res.status(200).json({ error: "failed to fetch artists" });
       });
       
+      exports.getNotificationCount = catchAsync(async (req, res) => {
+        const userId = req.userId;
+        const count = await Notification.countDocuments({
+          receiverId: userId,
+          seen: false,
+        });
+        const messagesCount = await chatMessage
+          .find({ userId: userId, isUserSeen: false })
+          .countDocuments();
+        return res.status(200).json({ success: true, count, messagesCount });
+      });

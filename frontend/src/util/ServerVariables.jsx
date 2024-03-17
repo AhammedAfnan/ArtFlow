@@ -16,6 +16,7 @@ export const  ServerVariables = {
     editUserProfile:'/editUserProfile',
     addPost:'/addPost',
     showArtists:'/showArtists',
+    chatWithArtist:'/chatWithArtist',
 
     //artistRoutes
     ArtistLogin:'/artistLogin',

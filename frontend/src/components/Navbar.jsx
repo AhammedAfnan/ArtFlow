@@ -14,8 +14,8 @@ import { logoutUser } from "../redux/AuthSlice";
 import { userRequest } from "../Helper/instance";
 import { apiEndPoints } from "../util/api";
 import toast from "react-hot-toast";
-// import socket from "./SocketIo";
-// import CallingUi from "./CallingUi";
+import socket from "./SocketIo";
+import CallingUi from "./CallingUi";
 import  BASE_URL  from "../config/api";
 
 const Navbar = () => {
@@ -30,30 +30,30 @@ const Navbar = () => {
   const [MsgCount, setMsgCount] = useState(0);
   const [openVideoCallModal, setOpenVideoCAllModal] = useState(false);
 
-  // useEffect(() => {
-  //   // Handle the notification event
-  //   socket.on("userNotification", (notification) => {
-  //     toast.success(notification.message, { duration: 5000 });
-  //   });
-  //   socket.on("videoCallInvitation", (data) => {
-  //     setSender(data?.sender);
-  //     setMeetLink(data?.meetLink);
-  //     setOpenVideoCAllModal(true);
-  //   });
+  useEffect(() => {
+    // Handle the notification event
+    socket.on("userNotification", (notification) => {
+      toast.success(notification.message, { duration: 5000 });
+    });
+    socket.on("videoCallInvitation", (data) => {
+      setSender(data?.sender);
+      setMeetLink(data?.meetLink);
+      setOpenVideoCAllModal(true);
+    });
 
-  //   return () => {
-  //     socket.off("userNotification");
-  //     socket.off("videoCallInvitation");
-  //   };
-  // }, []);
+    return () => {
+      socket.off("userNotification");
+      socket.off("videoCallInvitation");
+    };
+  }, []);
 
-  // const closeModal = () => {
-  //   socket.emit("videoCallResponse", {
-  //     userId: sender._id,
-  //     accepted: false,
-  //   });
-  //   setOpenVideoCAllModal(false);
-  // };
+  const closeModal = () => {
+    socket.emit("videoCallResponse", {
+      userId: sender._id,
+      accepted: false,
+    });
+    setOpenVideoCAllModal(false);
+  };
   const customStyles = {
     content: {
       top: "30%",
@@ -65,58 +65,58 @@ const Navbar = () => {
     },
   };
 
-  // useEffect(() => {
-  //   userRequest({
-  //     url: apiEndPoints.userNotificationsCount,
-  //     method: "get",
-  //   })
-  //     .then((res) => {
-  //       if (res.data?.success) {
-  //         setNtCount(res.data?.count);
-  //         if (location.pathname !== ServerVariables.chatWithArtist) {
-  //           setMsgCount(res.data?.messagesCount);
-  //         }
-  //       }
-  //     })
-  //     .catch((err) => {
-  //       console.log(err.message);
-  //     });
-  // }, [Ntcount, MsgCount]);
+  useEffect(() => {
+    userRequest({
+      url: apiEndPoints.userNotificationsCount,
+      method: "get",
+    })
+      .then((res) => {
+        if (res.data?.success) {
+          setNtCount(res.data?.count);
+          if (location.pathname !== ServerVariables.chatWithArtist) {
+            setMsgCount(res.data?.messagesCount);
+          }
+        }
+      })
+      .catch((err) => {
+        console.log(err.message);
+      });
+  }, [Ntcount, MsgCount]);
 
-  // let adjustedNtcount = Ntcount;
-  // let adjustedMsgcount = MsgCount;
+  let adjustedNtcount = Ntcount;
+  let adjustedMsgcount = MsgCount;
 
-  // if (Ntcount > 10) {
-  //   if (Ntcount > 1000) {
-  //     adjustedNtcount = "999+";
-  //   } else if (Ntcount > 100) {
-  //     adjustedNtcount = "99+";
-  //   } else if (Ntcount > 50) {
-  //     adjustedNtcount = "50+";
-  //   } else if (Ntcount > 20) {
-  //     adjustedNtcount = "20+";
-  //   } else if (Ntcount > 10) {
-  //     adjustedNtcount = "10+";
-  //   } else {
-  //     adjustedNtcount = Ntcount;
-  //   }
-  // }
+  if (Ntcount > 10) {
+    if (Ntcount > 1000) {
+      adjustedNtcount = "999+";
+    } else if (Ntcount > 100) {
+      adjustedNtcount = "99+";
+    } else if (Ntcount > 50) {
+      adjustedNtcount = "50+";
+    } else if (Ntcount > 20) {
+      adjustedNtcount = "20+";
+    } else if (Ntcount > 10) {
+      adjustedNtcount = "10+";
+    } else {
+      adjustedNtcount = Ntcount;
+    }
+  }
 
-  // if (MsgCount > 10) {
-  //   if (MsgCount > 1000) {
-  //     adjustedMsgcount = "999+";
-  //   } else if (MsgCount > 100) {
-  //     adjustedMsgcount = "99+";
-  //   } else if (MsgCount > 50) {
-  //     adjustedMsgcount = "50+";
-  //   } else if (MsgCount > 20) {
-  //     adjustedMsgcount = "20+";
-  //   } else if (MsgCount > 10) {
-  //     adjustedMsgcount = "10+";
-  //   } else {
-  //     adjustedMsgcount = MsgCount;
-  //   }
-  // }
+  if (MsgCount > 10) {
+    if (MsgCount > 1000) {
+      adjustedMsgcount = "999+";
+    } else if (MsgCount > 100) {
+      adjustedMsgcount = "99+";
+    } else if (MsgCount > 50) {
+      adjustedMsgcount = "50+";
+    } else if (MsgCount > 20) {
+      adjustedMsgcount = "20+";
+    } else if (MsgCount > 10) {
+      adjustedMsgcount = "10+";
+    } else {
+      adjustedMsgcount = MsgCount;
+    }
+  }
 
   useEffect(() => {
     userRequest({
@@ -395,20 +395,20 @@ const Navbar = () => {
               </div>
             </div>
           </Disclosure.Panel>
-          {/* <Modal
+          <Modal
             isOpen={openVideoCallModal}
             onRequestClose={closeModal}
             ariaHideApp={false}
             style={customStyles}
-          > */}
+          >
             {/* Use the CommentModal component */}
-            {/* <CallingUi
+            <CallingUi
               isOpen={openVideoCallModal}
               closeModal={closeModal}
               sender={sender}
               link={meetLink}
             />
-          </Modal> */}
+          </Modal>
         </>
       )}
     </Disclosure>
