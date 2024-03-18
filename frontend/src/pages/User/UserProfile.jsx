@@ -1,11 +1,11 @@
 import React, { useState } from "react";
 import { useSelector } from "react-redux";
 import EditIcon from "../../components/icons/EditIcon";
-// import Navbar from "../../components/Navbar";
+import Navbar from "../../components/Navbar";
 import Modal from "react-modal";
 import { ServerVariables } from "../../util/ServerVariables";
 import { useNavigate } from "react-router-dom";
-// import FollowingsModal from "../../components/Followings";
+import FollowingsModal from "../../components/Followings";
 import { motion } from "framer-motion";
 import BASE_URL  from "../../config/api";
 

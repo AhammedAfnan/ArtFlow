@@ -6,6 +6,7 @@ const catchAsync = require("../util/catchAsync"),
     Plan = require("../models/admin/planModel"),
     otpTemplate = require("../util/otpTemplate"),
     randomString = require("randomstring"),
+    Banner = require("../models/admin/BannerModel"),
     Mail = require("../util/otpMailer"),
     jwt = require("jsonwebtoken"),
     paypal = require('paypal-rest-sdk'),
@@ -453,4 +454,14 @@ exports.ResendOtp = catchAsync(async (req, res) => {
       return res.status(200).json({ success: "ok", followers });
     }
     return res.status(200).json({ error: "No followers found" });
+  });
+
+  exports.getArtistBanners = catchAsync(async (req, res) => {
+    const banners = await Banner.find({ isDeleted: false }).sort({
+      createdAt: -1,
+    });
+    if (banners) {
+      return res.status(200).json({ success: "ok", banners });
+    }
+    return res.json({ error: "failed to get banners" });
   });

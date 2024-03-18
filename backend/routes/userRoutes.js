@@ -30,6 +30,14 @@ userRouter
         userAuth,
         userController.getNotificationCount
       )
+      .get("/getUserFollowings", userAuth, userController.getUserFollowings)
+
+      //notifications
+  .get(
+    "/getUserAllNotifications",
+    userAuth,
+    userController.getUserNotifications
+  )
 
       // chat
     .get("/getArtistsFollowed", userAuth, chatController.getArtistUserFollow)

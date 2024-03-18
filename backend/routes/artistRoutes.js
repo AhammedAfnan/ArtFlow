@@ -75,4 +75,10 @@ artistRouter
     artistAuthMiddleware,
     artistController.getArtistFollowers
   )
+
+  .get(
+    "/getArtistBanners",
+    artistAuthMiddleware,
+    artistController.getArtistBanners
+  )
 module.exports = artistRouter;

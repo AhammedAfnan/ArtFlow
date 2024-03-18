@@ -52,6 +52,8 @@ import PaymentFailPage from "../pages/Artist/ErrorPage";
 import PaymentSuccessPage from "../pages/Artist/SuccessPage";
 import ChatWithArtist from "../pages/User/Chat";
 import ExplorePage from "../pages/User/ExplorePage";
+import ArtistAboutPage from "../pages/Artist/ArtistAbout";
+import UserNotification from "../pages/User/UserNotifications";
 
 function AppRoutes () {
   const {loading} = useSelector((state)=>state.alerts)
@@ -118,6 +120,10 @@ function AppRoutes () {
             path={ServerVariables.chatWithArtist}
             element={<ChatWithArtist />}
           />
+          <Route
+            path={ServerVariables.userNotifications}
+            element={<UserNotification />}
+          />
         </Route>
 
         //artistRoutes
@@ -152,6 +158,7 @@ function AppRoutes () {
             path={ServerVariables.errorPage}
             element={<PaymentFailPage />}
           />
+          <Route path={ServerVariables.aboutPage} element={<ArtistAboutPage />} />
       </Route>
         //adminRoutes
 

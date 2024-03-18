@@ -21,6 +21,9 @@ export const apiEndPoints = {
     getChatMessages: "api/user/getChatMessages",
     sendNewMessage: "api/user/sendNewMessage",
     getArtistFollowers: "api/user/getArtistFollowers",
+    getUserAllNotifications: "api/user/getUserAllNotifications",
+    getUserFollowings: "api/user/getUserFollowings",
+    unFollowArtist: "/api/user/unFollowArtist",
 
     //artist endpoints
     getCategories: "/api/artist/getCategories",
@@ -39,6 +42,7 @@ export const apiEndPoints = {
     getPostComments: "/api/artist/getPostComments",
     getArtistsFollowed: "api/user/getArtistsFollowed",
     getFollowersInArtistSide: "api/artist/getFollowersInArtistSide",
+    getArtistBanners: "/api/artist/getArtistBanners",
 
      //admin endpoints
     postAdminLogin: "/api/admin/postAdminLogin",
