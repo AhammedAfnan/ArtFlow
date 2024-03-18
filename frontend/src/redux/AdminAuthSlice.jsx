@@ -30,7 +30,7 @@ export const AdminAuthSlice = createSlice({
             localStorage.setItem("adminInfo",JSON.stringify(action.payload.admin))
             localStorage.setItem("adminToken",JSON.stringify(action.payload.token))
             state.token = action.payload.token;
-            state.message = action.payload.success;
+            state.message = action.payload.success ? action.payload.success : '';
             state.role = 'admin'
         },
         loginReject:(state,action)=>{

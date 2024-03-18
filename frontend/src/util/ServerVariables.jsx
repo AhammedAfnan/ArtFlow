@@ -9,6 +9,7 @@ export const  ServerVariables = {
     Register: "/register",
     verifyOtp:'/verifyOtp',
     userHome:"/userHome",
+    explore:'/explore',
     verifyEmail:'/verifyEmail',
     forgetOtp:'/forgetOtp',
     changePassword:'/changePassword',

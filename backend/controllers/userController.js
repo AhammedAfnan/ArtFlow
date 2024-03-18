@@ -9,7 +9,9 @@ const User = require('../models/user/userModel'),
       Mail = require('../util/otpMailer'),
       Artist = require("../models/artist/artistModel"),
       ArtistNotificationModel = require("../models/artist/notificationModel"),
-      randomString = require('randomstring')
+      randomString = require('randomstring'),
+      chatModel = require("../models/user/chatModel"),
+      chatMessage = require("../models/user/chatMessage");
 
     exports.register = catchAsync(async(req,res)=>{
         const {name,mobile,email,password}= req.body;
@@ -327,4 +329,22 @@ const User = require('../models/user/userModel'),
           .find({ userId: userId, isUserSeen: false })
           .countDocuments();
         return res.status(200).json({ success: true, count, messagesCount });
+      });
+
+      exports.getArtistFollowers = catchAsync(async (req, res) => {
+        const artist = await Artist.findById(req.body.artistId).populate("followers");
+        const followers = artist.followers;
+        if (followers.length) {
+          return res.status(200).json({ success: "ok", followers });
+        }
+        return res.status(200).json({ error: "No followers found" });
+      });
+      
+      exports.getUserFollowings = catchAsync(async (req, res) => {
+        const user = await User.findById(req.userId).populate("followings");
+        const followings = user.followings;
+        if (followings.length) {
+          return res.status(200).json({ success: "ok", followings });
+        }
+        return res.status(200).json({ error: "No followings found" });
       });

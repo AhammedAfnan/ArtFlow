@@ -51,6 +51,7 @@ import ShowArtists from "../pages/User/ShowArtists";
 import PaymentFailPage from "../pages/Artist/ErrorPage";
 import PaymentSuccessPage from "../pages/Artist/SuccessPage";
 import ChatWithArtist from "../pages/User/Chat";
+import ExplorePage from "../pages/User/ExplorePage";
 
 function AppRoutes () {
   const {loading} = useSelector((state)=>state.alerts)
@@ -105,6 +106,7 @@ function AppRoutes () {
 
         <Route element={<IsLoggedUser/>}>
            <Route path={ServerVariables.userHome} element={<UserHome/>}/>
+           <Route path={ServerVariables.explore} element={<ExplorePage />} />
            <Route path={ServerVariables.userProfile} element={<UserProfile />} />
            <Route
             path={ServerVariables.editUserProfile}

@@ -445,3 +445,12 @@ exports.ResendOtp = catchAsync(async (req, res) => {
   
     return res.status(200).json({ error: "delete post failed" });
   });
+
+  exports.getArtistFollowers = catchAsync(async (req, res) => {
+    const artist = await Artist.findById(req.artistId).populate("followers");
+    const followers = artist.followers;
+    if (followers.length) {
+      return res.status(200).json({ success: "ok", followers });
+    }
+    return res.status(200).json({ error: "No followers found" });
+  });

@@ -1,4 +1,5 @@
 const mongoose = require('mongoose'),
+{ ObjectId } = mongoose.Schema.Types,
 
 userSchema = new mongoose.Schema({
     name:{
@@ -38,9 +39,10 @@ userSchema = new mongoose.Schema({
     profile:{
         type:String,
         default:"avatar.png"
-    }
+    },
+    followings: [{ type: ObjectId, ref: "artist" }],
 },
 {timestamps:true}
-),
-userModel = mongoose.model('User',userSchema)
-module.exports = userModel;
+)
+
+module.exports = mongoose.model('User',userSchema);

@@ -1,5 +1,6 @@
 const express = require("express")
 const User = require("../models/user/userModel");
+const Chat = require("../models/user/chatModel");
 const ChatMessages = require("../models/user/chatMessage");
 const catchAsync = require("../util/catchAsync");
 

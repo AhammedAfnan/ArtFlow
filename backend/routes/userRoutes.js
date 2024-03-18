@@ -20,6 +20,7 @@ userRouter
         userController.updateUserProfile
       )
     .get("/getCurrentUser", userAuth, userController.getCurrentUser)
+    .post("/getArtistFollowers", userAuth, userController.getArtistFollowers)
     .get("/getAllBanners", userAuth, userController.getAllBanners)
     .get("/getAllArtists", userAuth, userController.getAllArtists)
     .post("/followArtist", userAuth, userController.followArtist)
@@ -31,7 +32,7 @@ userRouter
       )
 
       // chat
-    .get("/getArtistsFollowed", userAuth, chatController.getArtistsUserFollow)
+    .get("/getArtistsFollowed", userAuth, chatController.getArtistUserFollow)
     .post("/getChatMessages", userAuth, chatController.getChatMessages)
     .post("/sendNewMessage", userAuth, chatController.sendNewMessage)
 

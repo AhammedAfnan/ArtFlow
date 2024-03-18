@@ -70,5 +70,9 @@ artistRouter
     artistAuthMiddleware,
     artistController.getMySubscriptions
   )
-
+  .get(
+    "/getFollowersInArtistSide",
+    artistAuthMiddleware,
+    artistController.getArtistFollowers
+  )
 module.exports = artistRouter;

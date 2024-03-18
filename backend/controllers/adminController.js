@@ -389,3 +389,72 @@ exports.getSubscriptionHistory = catchAsync(async (req, res) => {
     totalPages,
   });
 });
+
+exports.getDashboardDatas = catchAsync(async (req, res) => {
+  // Calculate daily, weekly, and monthly date ranges
+  const currentDate = new Date();
+  const oneDay = 24 * 60 * 60 * 1000; // One day in milliseconds
+  const oneWeek = 7 * oneDay;
+  const oneMonth = 30 * oneDay;
+
+  const startDateDaily = new Date(currentDate - oneDay);
+  const startDateWeekly = new Date(currentDate - oneWeek);
+  const startDateMonthly = new Date(currentDate - oneMonth);
+
+    // Function to calculate monthly revenue data
+    const calculateMonthlyRevenue = async () => {
+      const monthlyRevenueData = [];
+  
+      for (let i = 1; i <= 12; i++) {
+        const startDate = new Date(currentDate.getFullYear(), i - 1, 1);
+        const endDate = new Date(currentDate.getFullYear(), i, 0, 23, 59, 59, 999);
+  
+        const monthlyAmount = await calculateTotalAmount(startDate, endDate);
+  
+        monthlyRevenueData.push({
+          month: monthNames[i - 1], // Using 0-based index
+          amount: monthlyAmount,
+        });
+      }
+  
+      return monthlyRevenueData;
+    };
+
+  // Function to calculate the total amount from subscriptions
+  // const calculateTotalAmount = async (startDate) => {
+  //   const subscriptions = await subscritionHistoryModel.find({
+  //     date: { $gte: startDate, $lte: currentDate },
+  //   }).populate("plan");
+
+  //   let totalAmount = 0;
+
+  //   subscriptions.forEach((subscription) => {
+  //     totalAmount += subscription.plan.amount; // Assuming your plan model has an 'amount' field
+  //   });
+
+  //   return totalAmount;
+  // };
+
+  // Get counts for users, artists, and subscribed artists
+  const users = await User.find({}).countDocuments();
+  const artists = await Artist.find({}).countDocuments();
+  const subscribedArtists = await Artist.find({ isSubscribed: true }).countDocuments();
+
+  // Calculate total amounts for daily, weekly, and monthly subscriptions
+  // const dailyAmount = await calculateTotalAmount(startDateDaily);
+  // const weeklyAmount = await calculateTotalAmount(startDateWeekly);
+  // const monthlyAmount = await calculateTotalAmount(startDateMonthly);
+  // const monthlyRevenueData = await calculateMonthlyRevenue();
+
+  return res.status(200).json({
+    success: "ok",
+    users,
+    artists,
+    // subscribedArtists,
+    // dailyAmount,
+    // weeklyAmount,
+    // monthlyAmount,
+    // monthlyRevenueData,
+  });
+});
+

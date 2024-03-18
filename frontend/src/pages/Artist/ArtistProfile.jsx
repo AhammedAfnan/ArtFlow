@@ -5,7 +5,7 @@ import ArtistNavbar from "../../components/ArtistNav";
 import Modal from "react-modal";
 import { useNavigate } from "react-router-dom";
 import { ServerVariables } from "../../util/ServerVariables";
-// import FollowersModal from "../../components/FollowersModal";
+import FollowersModal from "../../components/FollowersModal";
 import { motion } from "framer-motion";
 import BASE_URL  from "../../config/api";
 
@@ -120,11 +120,11 @@ const ArtistProfile = () => {
             ariaHideApp={false}
             style={customStyles}
           >
-            {/* <FollowersModal
+            <FollowersModal
               isOpen={isModalOpen}
               closeModal={closeModal}
               artistId={artist._id}
-            /> */}
+            />
           </Modal>
         </div>
       </motion.div>
