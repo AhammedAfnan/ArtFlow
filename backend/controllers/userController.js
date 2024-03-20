@@ -387,3 +387,55 @@ exports.getUserNotifications = catchAsync(async (req, res) => {
 
   return res.status(200).json({ notifications, success: true });
 });
+
+exports.comment = catchAsync(async (req, res) => {
+  const newComment = {
+    text: req.body.text,
+    postedBy: req.userId,
+  };
+  const user = await User.findById(req.userId);
+  const updatedPost = await Post.findByIdAndUpdate(
+    req.body.postId,
+    { $push: { comments: newComment } },
+    { new: true }
+  ).populate("postedBy");
+  // to send notification to artist
+  const Notify = {
+    receiverId: updatedPost.postedBy._id,
+    senderId: req.userId,
+    relatedPostId: updatedPost._id,
+    notificationMessage: `${user.name} commented '${newComment.text}' to your post`,
+    date: new Date(),
+  };
+  const newNotification = new ArtistNotificationModel(Notify);
+  newNotification.save();
+
+  if (updatedPost) {
+    return res.status(200).json({ success: "ok" });
+  }
+  return res.status(200).json({ error: "failed" });
+});
+
+exports.clearAllNotification = catchAsync(async (req, res) => {
+  const id = req.userId;
+  const clearNotifications = await Notification.deleteMany({
+    receiverId: id,
+    seen: true,
+  });
+  if (clearNotifications) {
+    return res.status(200).json({ success: "All notifications cleared" });
+  }
+  return res.json({ error: "deleting notification failed" });
+});
+
+
+exports.deleteNotification = catchAsync(async (req, res) => {
+  const id = req.body?.notificationId;
+  const deletedNotification = await Notification.findOneAndDelete({ _id: id });
+  if (deletedNotification) {
+    return res
+      .status(200)
+      .json({ success: "deleted notification successfully" });
+  }
+  return res.json({ error: "deleting notification failed" });
+});

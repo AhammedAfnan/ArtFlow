@@ -23,7 +23,9 @@ export const apiEndPoints = {
     getArtistFollowers: "api/user/getArtistFollowers",
     getUserAllNotifications: "api/user/getUserAllNotifications",
     getUserFollowings: "api/user/getUserFollowings",
-    unFollowArtist: "/api/user/unFollowArtist",
+    comment: "/api/user/comment",
+    clearUserAllNotifications: "api/user/clearUserAllNotifications",
+    deleteUserNotification: "api/user/deleteUserNotification",
 
     //artist endpoints
     getCategories: "/api/artist/getCategories",
@@ -43,6 +45,9 @@ export const apiEndPoints = {
     getArtistsFollowed: "api/user/getArtistsFollowed",
     getFollowersInArtistSide: "api/artist/getFollowersInArtistSide",
     getArtistBanners: "/api/artist/getArtistBanners",
+    getAllMessagedUsers: "/api/artist/getAllMessagedUsers",
+    getArtistNotificationCount: "/api/artist/getArtistNotificationCount",
+    getArtistNotifications: "/api/artist/getArtistNotifications",
 
      //admin endpoints
     postAdminLogin: "/api/admin/postAdminLogin",

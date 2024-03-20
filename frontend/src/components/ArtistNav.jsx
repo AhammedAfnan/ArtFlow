@@ -12,46 +12,46 @@ import { Fragment, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { logoutArtist } from "../redux/ArtistAuthSlice";
 import Modal from "react-modal";
-// import socket from "./SocketIo";
+import socket from "./SocketIo";
 import toast from "react-hot-toast";
 import { ArtistRequest } from "../Helper/instance";
 import { apiEndPoints } from "../util/api";
-// import CallingUi from "./CallingUi";
+import CallingUi from "./CallingUi";
 import BASE_URL  from "../config/api";
 
 const ArtistNavbar = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [activeItem, setActiveItem] = useState("Home");
-//   const [Ntcount, setNtCount] = useState(0);
-//   const [MsgCount, setMsgCount] = useState(0);
+  const [Ntcount, setNtCount] = useState(0);
+  const [MsgCount, setMsgCount] = useState(0);
   const location = useLocation();
-//   const [sender, setSender] = useState({});
-//   const [meetLink, setMeetLink] = useState("");
-//   const [openVideoCallModal, setOpenVideoCAllModal] = useState(false);
+  const [sender, setSender] = useState({});
+  const [meetLink, setMeetLink] = useState("");
+  const [openVideoCallModal, setOpenVideoCAllModal] = useState(false);
 
   const { artist } = useSelector((state) => state.ArtistAuth);
 
-//   useEffect(() => {
-//     // Handle the notification event
-//     socket.on("artistNotification", (notification) => {
-//       toast.success(notification.message, { duration: 5000 });
-//     });
-//     socket.on("videoCallInvitation", (data) => {
-//       console.log("Received video call invitation", data);
-//       setSender(data?.sender);
-//       setMeetLink(data?.meetLink);
-//       setOpenVideoCAllModal(true);
-//       console.log(sender);
-//       console.log(meetLink);
-//     });
+  useEffect(() => {
+    // Handle the notification event
+    socket.on("artistNotification", (notification) => {
+      toast.success(notification.message, { duration: 5000 });
+    });
+    socket.on("videoCallInvitation", (data) => {
+      console.log("Received video call invitation", data);
+      setSender(data?.sender);
+      setMeetLink(data?.meetLink);
+      setOpenVideoCAllModal(true);
+      console.log(sender);
+      console.log(meetLink);
+    });
 
-//     return () => {
-//       console.log("Cleanup useEffect");
-//       socket.off("artistNotification");
-//       socket.off("videoCallInvitation");
-//     };
-//   }, []);
+    return () => {
+      console.log("Cleanup useEffect");
+      socket.off("artistNotification");
+      socket.off("videoCallInvitation");
+    };
+  }, []);
 
   const customStyles = {
     content: {
@@ -64,31 +64,31 @@ const ArtistNavbar = () => {
     },
   };
 
-//   const closeModal = () => {
-//     socket.emit("videoCallResponse", {
-//       userId: sender._id,
-//       accepted: false,
-//     });
-//     setOpenVideoCAllModal(false);
-//   };
+  const closeModal = () => {
+    socket.emit("videoCallResponse", {
+      userId: sender._id,
+      accepted: false,
+    });
+    setOpenVideoCAllModal(false);
+  };
 
-//   useEffect(() => {
-//     ArtistRequest({
-//       url: apiEndPoints.getArtistNotificationCount,
-//       method: "get",
-//     })
-//       .then((res) => {
-//         if (res.data?.success) {
-//           setNtCount(res.data?.count);
-//           if (location.pathname !== ServerVariables.artistChatPage) {
-//             setMsgCount(res.data?.messagesCount);
-//           }
-//         }
-//       })
-//       .catch((err) => {
-//         console.log(err.message);
-//       });
-//   }, [Ntcount, MsgCount]);
+  useEffect(() => {
+    ArtistRequest({
+      url: apiEndPoints.getArtistNotificationCount,
+      method: "get",
+    })
+      .then((res) => {
+        if (res.data?.success) {
+          setNtCount(res.data?.count);
+          if (location.pathname !== ServerVariables.artistChatPage) {
+            setMsgCount(res.data?.messagesCount);
+          }
+        }
+      })
+      .catch((err) => {
+        console.log(err.message);
+      });
+  }, [Ntcount, MsgCount]);
 
   useEffect(() => {
     ArtistRequest({
@@ -108,39 +108,39 @@ const ArtistNavbar = () => {
     }
   }, []);
 
-//   let adjustedNtcount = Ntcount;
-//   let adjustedMsgcount = MsgCount;
+  let adjustedNtcount = Ntcount;
+  let adjustedMsgcount = MsgCount;
 
-//   if (Ntcount > 10) {
-//     if (Ntcount > 1000) {
-//       adjustedNtcount = "999+";
-//     } else if (Ntcount > 100) {
-//       adjustedNtcount = "99+";
-//     } else if (Ntcount > 50) {
-//       adjustedNtcount = "50+";
-//     } else if (Ntcount > 20) {
-//       adjustedNtcount = "20+";
-//     } else if (Ntcount > 10) {
-//       adjustedNtcount = "10+";
-//     } else {
-//       adjustedNtcount = Ntcount;
-//     }
-//   }
-//   if (MsgCount > 10) {
-//     if (MsgCount > 1000) {
-//       adjustedMsgcount = "999+";
-//     } else if (MsgCount > 100) {
-//       adjustedMsgcount = "99+";
-//     } else if (MsgCount > 50) {
-//       adjustedMsgcount = "50+";
-//     } else if (MsgCount > 20) {
-//       adjustedMsgcount = "20+";
-//     } else if (MsgCount > 10) {
-//       adjustedMsgcount = "10+";
-//     } else {
-//       adjustedMsgcount = MsgCount;
-//     }
-//   }
+  if (Ntcount > 10) {
+    if (Ntcount > 1000) {
+      adjustedNtcount = "999+";
+    } else if (Ntcount > 100) {
+      adjustedNtcount = "99+";
+    } else if (Ntcount > 50) {
+      adjustedNtcount = "50+";
+    } else if (Ntcount > 20) {
+      adjustedNtcount = "20+";
+    } else if (Ntcount > 10) {
+      adjustedNtcount = "10+";
+    } else {
+      adjustedNtcount = Ntcount;
+    }
+  }
+  if (MsgCount > 10) {
+    if (MsgCount > 1000) {
+      adjustedMsgcount = "999+";
+    } else if (MsgCount > 100) {
+      adjustedMsgcount = "99+";
+    } else if (MsgCount > 50) {
+      adjustedMsgcount = "50+";
+    } else if (MsgCount > 20) {
+      adjustedMsgcount = "20+";
+    } else if (MsgCount > 10) {
+      adjustedMsgcount = "10+";
+    } else {
+      adjustedMsgcount = MsgCount;
+    }
+  }
 
 
 
@@ -224,13 +224,13 @@ const ArtistNavbar = () => {
                         aria-hidden="true"
                       />
 
-                      {/* {MsgCount > 0 && (
+                      {MsgCount > 0 && (
                         <>
                           <span className="absolute top-0  bg-red-500 text-white rounded-full px-1  text-xs">
                             {adjustedMsgcount}
                           </span>
                         </>
-                      )} */}
+                      )} 
                     </div>
                   </button>
                   <button
@@ -245,13 +245,13 @@ const ArtistNavbar = () => {
                     <div className="relative inline-block">
                       <BellIcon className="h-6 w-6" aria-hidden="true" />
 
-                      {/* {Ntcount > 0 && (
+                      {Ntcount > 0 && (
                         <>
                           <span className="absolute top-0  bg-red-500 text-white rounded-full px-1  text-xs">
                             {adjustedNtcount}
                           </span>
                         </>
-                      )} */}
+                      )} 
                     </div>
                   </button>
 
@@ -376,13 +376,13 @@ const ArtistNavbar = () => {
                   <div className="relative inline-block">
                     <BellIcon className="h-6 w-6" aria-hidden="true" />
 
-                    {/* {Ntcount > 0 && (
+                     {Ntcount > 0 && (
                       <>
                         <span className="absolute top-0  bg-red-500 text-white rounded-full px-1  text-xs">
                           {adjustedNtcount}
                         </span>
                       </>
-                    )} */}
+                    )} 
                   </div>
                 </button>
               </div>
@@ -405,18 +405,18 @@ const ArtistNavbar = () => {
             </div>
           </Disclosure.Panel>
           <Modal
-            // isOpen={''}
-            // onRequestClose={''}
+            isOpen={'openVideoCallModal'}
+            onRequestClose={'closeModal'}
             ariaHideApp={false}
             style={customStyles}
           >
             {/* Use the CommentModal component */}
-            {/* <CallingUi
+            <CallingUi
               isOpen={openVideoCallModal}
               closeModal={closeModal}
               sender={sender}
               link={meetLink}
-            /> */}
+            />
           </Modal>
         </>
       )}

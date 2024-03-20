@@ -98,7 +98,8 @@ exports.sendNewMessage = catchAsync(async(req,res)=>{
         room_id:room_id,
         userId:req.userId,
         senderId:senderId,
-        artistId:req.body?.newMessage,
+        artistId:req.body?.artistId,
+        message: req.body?.newMessage,
         time:req.body?.time,
     };
 
@@ -107,3 +108,76 @@ exports.sendNewMessage = catchAsync(async(req,res)=>{
 
     res.status(200).send({success:true,data:savedData})
 })
+exports.getUserChatList = catchAsync(async (req, res) => {
+    const artistId = req.artistId;
+    console.log("artistId is :",artistId)
+  
+    const users = await Chat.find({ artistId: artistId }).populate(
+      "userId artistId"
+    );
+    console.log('users is :',users);
+    const userWithUnseenMessages = await Promise.all(
+      users.map(async (user) => {
+        const userId = user.userId;
+        const unseenMessagesCount = await ChatMessages.countDocuments({
+          userId: userId,
+          artistId:artistId,
+          isArtistSeen: false, // Add any additional conditions if needed
+        });
+        console.log('userwithunseenmessages',userWithUnseenMessages);
+        // Fetch the latest message for the artist
+        const latestMessage = await ChatMessages.findOne({
+          userId,
+          artistId: artistId,
+        })
+          .sort({ time: -1 }) // Sort by time in descending order to get the latest message
+          .exec();
+
+          console.log('latest message is :',latestMessage);
+        return {
+          ...user.toObject(),
+          unseenMessagesCount,
+          latestMessage: latestMessage?.message || null,
+          latestMessageSenderId: latestMessage?.senderId || null,
+        };
+      })
+    );
+  
+    res.status(200).send({ users: userWithUnseenMessages, success: true });
+  });
+
+  //  get room
+exports.artistGetRoom = catchAsync(async (req, res) => {
+    const artistId = req.artistId;
+    const userId = req.body.userId;
+  
+    const chatConnectionData = await Chat.findOne({
+      userId: userId,
+      artistId: artistId,
+    }).populate("userId artistId");
+    const room_id = chatConnectionData?._id;
+  
+    const Messages = await ChatMessages.find({ room_id: room_id }).sort({
+      time: 1,
+    });
+    await ChatMessages.updateMany(
+      { room_id: room_id, isArtistSeen: false },
+      { $set: { isArtistSeen: true } }
+    );
+  
+    if (Messages.length > 0) {
+      res.status(200).json({
+        Data: chatConnectionData,
+        msg: Messages,
+        success: true,
+        room_id,
+        artistId,
+      });
+    } else {
+      // Handle the case where there are no messages
+      res
+        .status(200)
+        .send({ Data: chatConnectionData, success: true, room_id, artistId });
+    }
+  });
+  

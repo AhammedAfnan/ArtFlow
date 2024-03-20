@@ -31,12 +31,24 @@ userRouter
         userController.getNotificationCount
       )
       .get("/getUserFollowings", userAuth, userController.getUserFollowings)
-
+      .post("/comment", userAuth, userController.comment)
       //notifications
   .get(
     "/getUserAllNotifications",
     userAuth,
     userController.getUserNotifications
+  )
+
+  .delete(
+    "/clearUserAllNotifications",
+    userAuth,
+    userController.clearAllNotification
+  )
+
+  .delete(
+    "/deleteUserNotification",
+    userAuth,
+    userController.deleteNotification
   )
 
       // chat

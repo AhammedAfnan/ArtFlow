@@ -9,6 +9,7 @@ const catchAsync = require("../util/catchAsync"),
     Banner = require("../models/admin/BannerModel"),
     Mail = require("../util/otpMailer"),
     jwt = require("jsonwebtoken"),
+    Notification = require("../models/artist/notificationModel"),
     paypal = require('paypal-rest-sdk'),
     Category = require("../models/admin/categoryModel"),
     Post = require("../models/artist/postModel")
@@ -465,3 +466,42 @@ exports.ResendOtp = catchAsync(async (req, res) => {
     }
     return res.json({ error: "failed to get banners" });
   });
+
+  exports.getNotificationCount = catchAsync(async (req, res) => {
+    const artistId = req.artistId;
+    const count = await Notification.countDocuments({
+      receiverId: artistId,
+      seen: false,
+    });
+    const messagesCount = await chatMessage
+      .find({ artistId: artistId, isArtistSeen: false })
+      .countDocuments();
+    return res.status(200).json({ success: true, count, messagesCount });
+  });
+
+  exports.getArtistNotifications = catchAsync(async (req, res) => {
+    const Id = req.artistId;
+    await Notification.updateMany(
+      { receiverId: Id, seen: false },
+      { $set: { seen: true } }
+    );
+    const notifications = await Notification.find({ receiverId: Id })
+      .sort({
+        date: -1,
+      })
+      .populate({
+        path: "relatedPostId",
+        populate: [
+          {
+            path: "postedBy",
+            model: "artist",
+          },
+          {
+            path: "comments.postedBy",
+            model: "user",
+          },
+        ],
+      });
+    return res.status(200).json({ notifications, success: true });
+  });
+  

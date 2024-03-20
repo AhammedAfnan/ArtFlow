@@ -3,7 +3,8 @@ const express = require("express"),
    artistController = require("../controllers/artistController"),
    artistAuthMiddleware = require("../middlewares/Auth/artistAuth"),
    upload = require("../middlewares/imageUpload/cropImage"),
-   PlanExpired = require("../middlewares/artistPlanExpiryCheck");
+   PlanExpired = require("../middlewares/artistPlanExpiryCheck"),
+   chatController = require("../controllers/chatController")
 
 
 artistRouter
@@ -66,6 +67,12 @@ artistRouter
   // notifications 
 
   .get(
+    "/getArtistNotifications",
+    artistAuthMiddleware,
+    artistController.getArtistNotifications
+  )
+
+  .get(
     "/getMySubscriptions",
     artistAuthMiddleware,
     artistController.getMySubscriptions
@@ -77,8 +84,27 @@ artistRouter
   )
 
   .get(
+    "/getArtistNotificationCount",
+    artistAuthMiddleware,
+    artistController.getNotificationCount
+  )
+
+  .get(
     "/getArtistBanners",
     artistAuthMiddleware,
     artistController.getArtistBanners
+  )
+
+  //chat
+  .get(
+    "/getAllMessagedUsers",
+    artistAuthMiddleware,
+    chatController.getUserChatList
+  )
+
+  .post(
+    "/getPrevMessages",
+    artistAuthMiddleware,
+    chatController.artistGetRoom
   )
 module.exports = artistRouter;

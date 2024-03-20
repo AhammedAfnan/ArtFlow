@@ -19,6 +19,7 @@ export const  ServerVariables = {
     showArtists:'/showArtists',
     chatWithArtist:'/chatWithArtist',
     userNotifications:'/userNotifications',
+    viewArtistDetails:'/viewArtistDetails',
 
     //artistRoutes
     ArtistLogin:'/artistLogin',
@@ -33,6 +34,9 @@ export const  ServerVariables = {
     successPage:'/successPage',
     errorPage:'/errorPage',
     aboutPage:'/aboutPage',
+    artistChatPage:'/artistChatPage',
+    getPrevMessages: "/api/artist/getPrevMessages",
+    artistNotifications:'/artistNotifications',
 
     //Admin Routes
     AdminLogin:'/adminLogin',

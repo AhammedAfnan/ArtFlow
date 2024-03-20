@@ -1,6 +1,6 @@
 const mongoose = require("mongoose")
 const { ObjectId } = mongoose.Schema.Types;
-const chatMsgSchema = new mongoose.Schema(
+const ChatMsgSchema = new mongoose.Schema(
     {
         userId:{
             type:ObjectId,
@@ -34,4 +34,4 @@ const chatMsgSchema = new mongoose.Schema(
     { timestamps: true }
 )
 
-module.exports = mongoose.model("chatMsg",chatMsgSchema)
+module.exports = mongoose.model("chatMsg",ChatMsgSchema)
