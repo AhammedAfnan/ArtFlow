@@ -22,7 +22,6 @@ function ImageCrop({onNewImageUrl}) {
           return new File([blob], "newAvatar.png", { type: "image/png" });
         });
       if (file) {
-        console.log(file);
         const url = URL.createObjectURL(file);
         setPreview(url);
         onNewImageUrl(file)

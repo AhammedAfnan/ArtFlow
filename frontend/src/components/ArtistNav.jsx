@@ -47,7 +47,6 @@ const ArtistNavbar = () => {
     });
 
     return () => {
-      console.log("Cleanup useEffect");
       socket.off("artistNotification");
       socket.off("videoCallInvitation");
     };
@@ -405,8 +404,8 @@ const ArtistNavbar = () => {
             </div>
           </Disclosure.Panel>
           <Modal
-            isOpen={'openVideoCallModal'}
-            onRequestClose={'closeModal'}
+            isOpen={openVideoCallModal}
+            onRequestClose={closeModal}
             ariaHideApp={false}
             style={customStyles}
           >

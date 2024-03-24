@@ -107,4 +107,11 @@ artistRouter
     artistAuthMiddleware,
     chatController.artistGetRoom
   )
+
+  .post(
+    "/sendArtistNewMsg",
+    artistAuthMiddleware,
+    chatController.artistNewMessage
+  )
+  
 module.exports = artistRouter;

@@ -3,13 +3,13 @@ import { useDispatch, useSelector } from "react-redux";
 import { logoutArtist } from "../../redux/ArtistAuthSlice";
 import Modal from "react-modal";
 import { motion } from "framer-motion";
-// import StarRating from "../../components/StarRating";
-// import FollowersModal from "../../components/FollowersModal";
+import StarRating from "../../components/StarRating";
+import FollowersModal from "../../components/FollowersModal";
 import ArtistNavbar from "../../components/ArtistNav";
 import { useNavigate } from "react-router-dom";
 import { ServerVariables } from "../../util/ServerVariables";
 // import RatedUsersModal from "../../components/RatedUsersModal";
-import BASE_URL  from "../../config/api";
+import BASE_URL from "../../config/api";
 
 const containerVariants = {
   hidden: { opacity: 0, y: 50 },
@@ -112,7 +112,7 @@ function ArtistHome() {
             className="text-slate-500 cursor-pointer flex justify-center"
             onClick={openRatingModal}
           >
-            {/* Rating: <StarRating rating={averageRating} /> */}
+            Rating: <StarRating rating={averageRating} />
           </span>
           <div className="text-center mt-2">
             <h3 className="uppercase text-2xl text-slate-500 font-bold leading-normal mb-1">
@@ -158,16 +158,23 @@ function ArtistHome() {
                 ariaHideApp={false}
                 style={customStyles}
               >
- 
+                <FollowersModal
+                  isOpen={isModalOpen}
+                  closeModal={closeModal}
+                  artistId={artist._id}
+                />
               </Modal>
-              <Modal
+              {/* <Modal
                 isOpen={isRatingModalOpen}
                 onRequestClose={closeRatingModal}
                 ariaHideApp={false}
                 style={customStyles}
               >
-
-              </Modal>
+                <RatedUsersModal
+                  isOpen={openRatingModal}
+                  closeModal={closeRatingModal}
+                />
+              </Modal> */}
             </div>
           </div>
         </div>

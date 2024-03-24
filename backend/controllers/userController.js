@@ -7,6 +7,7 @@ const User = require("../models/user/userModel"),
   Notification = require("../models/artist/notificationModel"),
   otpTemplate = require("../util/otpTemplate"),
   Mail = require("../util/otpMailer"),
+  Post = require("../models/artist/postModel"),
   Artist = require("../models/artist/artistModel"),
   ArtistNotificationModel = require("../models/artist/notificationModel"),
   randomString = require("randomstring"),
@@ -314,6 +315,22 @@ exports.getAllArtists = catchAsync(async (req, res) => {
   }
 
   return res.status(200).json({ error: "failed to fetch artists" });
+});
+
+exports.getArtistAllposts = catchAsync(async (req, res) => {
+  const posts = await Post.find({ postedBy: req.body.artistId })
+    .populate({
+      path: "comments",
+      populate: {
+        path: "postedBy",
+        select: "name profile", // Replace 'User' with the actual model name for the user
+      },
+    })
+    .populate("postedBy");
+  if (posts) {
+    return res.status(200).json({ success: "ok", posts });
+  }
+  return res.status(200).json({ error: "failed to fetching artist posts" });
 });
 
 exports.getArtistFollowers = catchAsync(async (req, res) => {

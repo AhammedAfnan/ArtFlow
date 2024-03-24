@@ -26,6 +26,7 @@ export const apiEndPoints = {
     comment: "/api/user/comment",
     clearUserAllNotifications: "api/user/clearUserAllNotifications",
     deleteUserNotification: "api/user/deleteUserNotification",
+    getArtistAllposts: "/api/user/getArtistAllposts",
 
     //artist endpoints
     getCategories: "/api/artist/getCategories",
@@ -48,6 +49,8 @@ export const apiEndPoints = {
     getAllMessagedUsers: "/api/artist/getAllMessagedUsers",
     getArtistNotificationCount: "/api/artist/getArtistNotificationCount",
     getArtistNotifications: "/api/artist/getArtistNotifications",
+    getPrevMessages: "/api/artist/getPrevMessages",
+    sendArtistNewMsg: "/api/artist/sendArtistNewMsg",
 
      //admin endpoints
     postAdminLogin: "/api/admin/postAdminLogin",

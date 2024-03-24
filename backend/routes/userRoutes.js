@@ -23,6 +23,7 @@ userRouter
     .post("/getArtistFollowers", userAuth, userController.getArtistFollowers)
     .get("/getAllBanners", userAuth, userController.getAllBanners)
     .get("/getAllArtists", userAuth, userController.getAllArtists)
+    .post("/getArtistAllposts", userAuth, userController.getArtistAllposts)
     .post("/followArtist", userAuth, userController.followArtist)
     .post("/unFollowArtist", userAuth, userController.unFollowArtist)
     .get(

@@ -56,6 +56,7 @@ import ArtistAboutPage from "../pages/Artist/ArtistAbout";
 import UserNotification from "../pages/User/UserNotifications";
 import ArtistChatPage from "../pages/Artist/ArtistChatPage";
 import ArtistNotification from "../pages/Artist/ArtistNotification";
+import ViewArtistDetails from "../pages/User/ViewArtistDetails";
 
 function AppRoutes () {
   const {loading} = useSelector((state)=>state.alerts)
@@ -125,6 +126,10 @@ function AppRoutes () {
           <Route
             path={ServerVariables.userNotifications}
             element={<UserNotification />}
+          />
+          <Route
+            path={ServerVariables.viewArtistDetails}
+            element={<ViewArtistDetails />}
           />
         </Route>
 

@@ -110,12 +110,10 @@ exports.sendNewMessage = catchAsync(async(req,res)=>{
 })
 exports.getUserChatList = catchAsync(async (req, res) => {
     const artistId = req.artistId;
-    console.log("artistId is :",artistId)
   
     const users = await Chat.find({ artistId: artistId }).populate(
       "userId artistId"
     );
-    console.log('users is :',users);
     const userWithUnseenMessages = await Promise.all(
       users.map(async (user) => {
         const userId = user.userId;
@@ -124,7 +122,6 @@ exports.getUserChatList = catchAsync(async (req, res) => {
           artistId:artistId,
           isArtistSeen: false, // Add any additional conditions if needed
         });
-        console.log('userwithunseenmessages',userWithUnseenMessages);
         // Fetch the latest message for the artist
         const latestMessage = await ChatMessages.findOne({
           userId,
@@ -133,7 +130,6 @@ exports.getUserChatList = catchAsync(async (req, res) => {
           .sort({ time: -1 }) // Sort by time in descending order to get the latest message
           .exec();
 
-          console.log('latest message is :',latestMessage);
         return {
           ...user.toObject(),
           unseenMessagesCount,
@@ -180,4 +176,25 @@ exports.artistGetRoom = catchAsync(async (req, res) => {
         .send({ Data: chatConnectionData, success: true, room_id, artistId });
     }
   });
+
+  // to post new message
+exports.artistNewMessage = catchAsync(async (req, res) => {
+  const senderId = req.artistId;
+  const artistId = req.artistId;
+  const room_id = req.body.rid;
+
+  const Data = {
+    room_id: room_id,
+    userId: req.body.userId,
+    senderId: senderId,
+    artistId: artistId,
+    message: req.body.newMessage,
+    time: req.body.time,
+  };
+
+  const newData = new ChatMessages(Data);
+  const savedData = await newData.save();
+
+  res.status(200).json({ success: true, data: savedData });
+});
   

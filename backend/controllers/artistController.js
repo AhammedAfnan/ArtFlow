@@ -12,7 +12,8 @@ const catchAsync = require("../util/catchAsync"),
     Notification = require("../models/artist/notificationModel"),
     paypal = require('paypal-rest-sdk'),
     Category = require("../models/admin/categoryModel"),
-    Post = require("../models/artist/postModel")
+    Post = require("../models/artist/postModel"),
+    chatMessage = require("../models/user/chatMessage");
 
     paypal.configure({
       mode:"sandbox",
@@ -340,7 +341,7 @@ exports.ResendOtp = catchAsync(async (req, res) => {
 
   exports.checkCurrentArtistBlocked = catchAsync(async (req, res) => {
     const currentArtist = await Artist.findById(req.artistId);
-    if (currentArtist.isBlocked) {
+    if (currentArtist?.isBlocked) {
       return res.json({ error: "You are blocked by admin", currentArtist });
     }
     return res.status(200).json({ success: "ok" });
@@ -481,6 +482,7 @@ exports.ResendOtp = catchAsync(async (req, res) => {
 
   exports.getArtistNotifications = catchAsync(async (req, res) => {
     const Id = req.artistId;
+    // console.log('Id is :',Id);
     await Notification.updateMany(
       { receiverId: Id, seen: false },
       { $set: { seen: true } }

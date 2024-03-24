@@ -15,7 +15,7 @@ module.exports = async (req, res, next) => {
             error: "Authentication failed",
           });
         }
-        // req.artistId = decoded?.id;
+        req.artistId = decoded?.id;
         // const artist = await Artist.findById(req.artistId);
         // const currentDate = new Date();
         // if (artist.subscription.transactionId) {
@@ -26,7 +26,7 @@ module.exports = async (req, res, next) => {
             // );
           // }
         // }
-        // next();
+        next();
       }
     );
   } catch (error) {

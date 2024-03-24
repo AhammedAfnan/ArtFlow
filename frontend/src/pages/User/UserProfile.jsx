@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 import EditIcon from "../../components/icons/EditIcon";
 import Navbar from "../../components/Navbar";
@@ -7,7 +7,7 @@ import { ServerVariables } from "../../util/ServerVariables";
 import { useNavigate } from "react-router-dom";
 import FollowingsModal from "../../components/Followings";
 import { motion } from "framer-motion";
-import BASE_URL  from "../../config/api";
+import BASE_URL from "../../config/api";
 
 function UserProfile() {
   const { user } = useSelector((state) => state.Auth);
@@ -21,6 +21,20 @@ function UserProfile() {
   const closeModal = () => {
     setIsModalOpen(false);
   };
+
+  useEffect(() => {
+    const handleBackButton = () => {
+      if (isModalOpen) {
+        closeModal();
+      }
+    };
+
+    window.addEventListener("popstate", handleBackButton);
+
+    return () => {
+      window.removeEventListener("popstate", handleBackButton);
+    };
+  }, [isModalOpen]);
 
   const customStyles = {
     overlay: {
@@ -83,7 +97,7 @@ function UserProfile() {
             ariaHideApp={false}
             style={customStyles}
           >
-            {/* <FollowingsModal isOpen={isModalOpen} closeModal={closeModal} /> */}
+            <FollowingsModal isOpen={isModalOpen} closeModal={closeModal} />
           </Modal>
         </div>
       </motion.div>
