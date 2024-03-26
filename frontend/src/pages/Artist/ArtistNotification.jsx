@@ -121,7 +121,7 @@ const ArtistNotification = () => {
                     <p className="text-gray-800 font-bold">
                       {item?.notificationMessage}
                     </p>
-                    {item?.relatedPostId?<img onClick={()=>navigate(ServerVariables.artistPosts)} src={`${API_BASE_URL}/artistPosts/${item?.relatedPostId?.image}`}
+                    {item?.relatedPostId?<img onClick={()=>navigate(ServerVariables.artistPosts)} src={`${BASE_URL}/artistPosts/${item?.relatedPostId?.image}`}
                     className="w-10 h-10"
                     alt={item?.relatedPostId?.name}
                     />:''}

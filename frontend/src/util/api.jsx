@@ -11,6 +11,7 @@ export const apiEndPoints = {
     postVerifyLogin:'/api/user/verifyLogin',
     forgetVerifyEmail: "/api/user/verifyEmail",
     updatePassword: "/api/user/updatePassword",
+    getAllPosts: "/api/user/getAllPosts",
     updateUserProfile: "/api/user/updateUserProfile",
     getCurrentUser: "api/user/getCurrentUser",
     getAllBanners: "/api/user/getAllBanners",
@@ -27,6 +28,10 @@ export const apiEndPoints = {
     clearUserAllNotifications: "api/user/clearUserAllNotifications",
     deleteUserNotification: "api/user/deleteUserNotification",
     getArtistAllposts: "/api/user/getArtistAllposts",
+    getAllFollowingPosts: "/api/user/getAllFollowingPosts",
+    likePost: "/api/user/likePost",
+    unLikePost: "/api/user/unLikePost",
+    getComments: "/api/user/getComments",
 
     //artist endpoints
     getCategories: "/api/artist/getCategories",

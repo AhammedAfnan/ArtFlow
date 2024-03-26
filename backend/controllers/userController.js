@@ -175,6 +175,59 @@ exports.updatePassword = catchAsync(async (req, res) => {
   return res.status(200).json({ error: "password changing failed" });
 });
 
+exports.getAllFollowingsPosts = catchAsync(async (req, res) => {
+  const currentUser = await User.findById(req.userId);
+  const followedArtists = currentUser.followings;
+  // Fetch posts from followed artists
+  const artistPosts = await Post.find({ postedBy: { $in: followedArtists } })
+    .sort({ createdAt: -1 })
+    .populate({
+      path: "comments",
+      populate: {
+        path: "postedBy",
+        select: "name profile",
+      },
+    })
+    .populate("postedBy");
+
+  if (artistPosts) {
+    return res.status(200).json({ success: "ok", artistPosts });
+  }
+
+  return res.status(200).json({ error: "failed" });
+});
+
+exports.getAllPosts = catchAsync(async (req, res) => {
+  const artistPosts = await Post.find({})
+    .sort({ createdAt: -1 })
+    .populate({
+      path: "comments",
+      populate: {
+        path: "postedBy",
+        select: "name profile",
+      },
+    })
+    .populate("postedBy");
+
+  // Sort the posts based on the highest count of likes and the time elapsed
+  artistPosts.sort((a, b) => {
+    const likesComparison = b.likes.length - a.likes.length;
+
+    // If the likes count is the same, compare based on the time elapsed
+    if (likesComparison === 0) {
+      return b.createdAt - a.createdAt;
+    }
+
+    return likesComparison;
+  });
+
+  if (artistPosts) {
+    return res.status(200).json({ success: "ok", artistPosts });
+  }
+
+  return res.status(200).json({ error: "failed" });
+});
+
 exports.updateUserProfile = catchAsync(async (req, res) => {
   const { name, mobile } = req.body;
   if (req.body.userProfile) {
@@ -445,7 +498,6 @@ exports.clearAllNotification = catchAsync(async (req, res) => {
   return res.json({ error: "deleting notification failed" });
 });
 
-
 exports.deleteNotification = catchAsync(async (req, res) => {
   const id = req.body?.notificationId;
   const deletedNotification = await Notification.findOneAndDelete({ _id: id });
@@ -455,4 +507,60 @@ exports.deleteNotification = catchAsync(async (req, res) => {
       .json({ success: "deleted notification successfully" });
   }
   return res.json({ error: "deleting notification failed" });
+});
+
+exports.likePost = catchAsync(async (req, res) => {
+  const { id } = req.body;
+  const user = await User.findById(req.userId);
+  const updatedPost = await Post.findByIdAndUpdate(
+    id,
+    { $push: { likes: req.userId } },
+    { new: true }
+  );
+  // to send notification to artist
+  const Notify = {
+    receiverId: updatedPost.postedBy,
+    senderId: req.userId,
+    relatedPostId: updatedPost._id,
+    notificationMessage: `${user.name} liked your post`,
+    date: new Date(),
+  };
+  const newNotification = new ArtistNotificationModel(Notify);
+  newNotification.save();
+  if (updatedPost) {
+    return res
+      .status(200)
+      .json({ success: "liked post successfully", updatedPost });
+  }
+  return res.status(200).json({ error: "failed" });
+});
+
+exports.unLikePost = catchAsync(async (req, res) => {
+  const { id } = req.body;
+  const updatedPost = await Post.findByIdAndUpdate(
+    id,
+    { $pull: { likes: req.userId } },
+    { new: true }
+  );
+
+  if (updatedPost) {
+    return res.status(200).json({ success: "ok" });
+  }
+  return res.status(200).json({ error: "failed" });
+});
+
+exports.getComments = catchAsync(async (req, res) => {
+  const post = await Post.findById(req.body.postId)
+    .populate({
+      path: "comments",
+      populate: {
+        path: "postedBy",
+        select: "name profile", 
+      },
+    })
+    .populate("postedBy");
+  const comments = post.comments;
+  if (comments?.length) {
+    res.status(200).json({ success: "ok", comments });
+  }
 });

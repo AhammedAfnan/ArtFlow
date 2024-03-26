@@ -12,6 +12,8 @@ userRouter
     .post("/resendOtp", userController.ResendOtp)
     .post("/verifyEmail", userController.forgetVerifyEmail)
     .post("/updatePassword", userController.updatePassword)
+    .get("/getAllFollowingPosts", userAuth, userController.getAllFollowingsPosts)
+    .get("/getAllPosts", userAuth, userController.getAllPosts)
     .post(
         "/updateUserProfile",
         userAuth,
@@ -19,9 +21,12 @@ userRouter
         upload.resizeUserProfile,
         userController.updateUserProfile
       )
+    .post("/likePost", userAuth, userController.likePost)
+    .post("/unLikePost", userAuth, userController.unLikePost)
     .get("/getCurrentUser", userAuth, userController.getCurrentUser)
     .post("/getArtistFollowers", userAuth, userController.getArtistFollowers)
     .get("/getAllBanners", userAuth, userController.getAllBanners)
+    .post("/getComments", userAuth, userController.getComments)
     .get("/getAllArtists", userAuth, userController.getAllArtists)
     .post("/getArtistAllposts", userAuth, userController.getArtistAllposts)
     .post("/followArtist", userAuth, userController.followArtist)
