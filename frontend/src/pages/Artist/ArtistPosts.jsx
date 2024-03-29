@@ -11,7 +11,7 @@ import toast from "react-hot-toast";
 import Swal from "sweetalert2";
 import { FaComment } from "react-icons/fa";
 import Modal from "react-modal";
-// import CommentModal from "../../components/CommentModal";
+import CommentModal from "../../components/CommentModal";
 import BASE_URL  from "../../config/api";
 
 const PostCard = ({ post, onDelete }) => {

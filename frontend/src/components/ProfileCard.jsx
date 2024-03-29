@@ -11,7 +11,7 @@ import toast from "react-hot-toast";
 import { IoArrowBackCircle } from "react-icons/io5";
 import FollowersModal from "./FollowersModal";
 // import RatingModal from "./RatingModal";
-import StarRating from "./StarRating";
+// import StarRating from "./StarRating";
 import BASE_URL from "../config/api";
 
 function ProfileCard({ Artist }) {
@@ -20,7 +20,7 @@ function ProfileCard({ Artist }) {
   const [artist, setArtist] = useState(Artist);
   const [isModalOpen, setIsModalOpen] = useState(false);
   // const [isRatingModalOpen, setIsRatingModalOpen] = useState(false);
-  const averageRating = artist.ratings?.reduce((acc,rating)=>acc + rating?.rating,0)/artist?.ratings?.length || 0
+  // const averageRating = artist.ratings?.reduce((acc,rating)=>acc + rating?.rating,0)/artist?.ratings?.length || 0
 
 
   const openModal = () => {
@@ -138,9 +138,9 @@ function ProfileCard({ Artist }) {
               </div>
             </div>
           </div>
-          <span className="text-slate-500 cursor-pointer flex justify-center">
+          {/* <span className="text-slate-500 cursor-pointer flex justify-center">
               Rating: <StarRating rating={averageRating} />
-            </span>
+            </span> */}
           <div className="text-center mt-2">
             <h3 className="uppercase text-2xl text-slate-500 font-bold leading-normal mb-1">
               {artist?.name}

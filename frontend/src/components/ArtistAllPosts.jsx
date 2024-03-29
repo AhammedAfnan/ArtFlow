@@ -76,7 +76,8 @@ const PostCard = ({ post, onLike, onUnLike, getPosts }) => {
     <div className="bg-white shadow-lg rounded-lg overflow-hidden m-4 w-full sm:w-1/2 md:w-1/3 lg:w-1/4 xl:w-1/5 relative">
       <img
         className="w-full h-42 object-cover"
-        src={`${BASE_URL}/artistPosts/${post.image}`}
+        // src={`${BASE_URL}/artistPosts/${post.image}`}
+        src={`http://localhost:5000/artistPosts/${post.image}`}
         alt={post.title}
       />
       <div className="p-4">
