@@ -128,7 +128,7 @@ function ArtistAboutPage() {
               <a href="https://flowbite.com/" className="flex items-center">
                 <img className="w-40 h-40 " src="images/userImages/hub1.png" alt="" />
                 <h1 className="self-center text-2xl font-semibold whitespace-nowrap text-white">
-                  ArtHub
+                  ArtFlow
                 </h1>
               </a>
             </div>
@@ -139,7 +139,7 @@ function ArtistAboutPage() {
                 </h2>
                 <ul className="text-yellow-500 dark:text-white font-medium">
                   <li className="mb-4">
-                    <a className="hover:underline">ArtHub</a>
+                    <a className="hover:underline">ArtFlow</a>
                   </li>
                   <li>
                     <a href="https://tailwindcss.com/" className="hover:underline">

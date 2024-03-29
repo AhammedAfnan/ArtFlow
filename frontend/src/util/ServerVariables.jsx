@@ -38,6 +38,7 @@ export const  ServerVariables = {
     artistChatPage:'/artistChatPage',
     getPrevMessages: "/api/artist/getPrevMessages",
     artistNotifications:'/artistNotifications',
+    artistVideoCall:'/artistVideoCall/:roomId/:userId',
 
     //Admin Routes
     AdminLogin:'/adminLogin',

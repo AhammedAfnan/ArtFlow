@@ -205,7 +205,8 @@ const PostCard = () => {
                 <div className="flex items-center mb-2 justify-between">
                   <img
                     className="h-8 w-8 rounded-full mr-2"
-                    src={`${BASE_URL}/artistProfile/${post?.postedBy?.profile}`}
+                    // src={`${BASE_URL}/artistProfile/${post?.postedBy?.profile}`}
+                    src={`http://localhost:5000/artistProfile/${post?.postedBy?.profile}`}
                     onClick={() =>
                       navigate(ServerVariables.viewArtistDetails, {
                         state: { artist: post?.postedBy },
@@ -247,7 +248,8 @@ const PostCard = () => {
                 <p className="text-gray-700 mb-4">{post?.description}</p>
                 {post.image && (
                   <img
-                    src={`${BASE_URL}/artistPosts/${post.image}`}
+                    // src={`${BASE_URL}/artistPosts/${post.image}`}
+                    src={`http://localhost:5000/artistPosts/${post.image}`}
                     alt={`Post by ${post?.postedBy?.name}`}
                     className="mb-4 rounded-md w-full"
                   />

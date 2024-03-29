@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { logoutArtist } from "../../redux/ArtistAuthSlice";
 import Modal from "react-modal";
 import { motion } from "framer-motion";
-import StarRating from "../../components/StarRating";
+// import StarRating from "../../components/StarRating";
 import FollowersModal from "../../components/FollowersModal";
 import ArtistNavbar from "../../components/ArtistNav";
 import { useNavigate } from "react-router-dom";
@@ -21,17 +21,17 @@ function ArtistHome() {
   const navigate = useNavigate();
   const { artist } = useSelector((state) => state.ArtistAuth);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [isRatingModalOpen, setIsRatingModalOpen] = useState(false);
-  const averageRating =
-    artist.ratings?.reduce((acc, rating) => acc + rating?.rating, 0) /
-      artist?.ratings?.length || 0;
+  // const [isRatingModalOpen, setIsRatingModalOpen] = useState(false);
+  // const averageRating =
+  //   artist.ratings?.reduce((acc, rating) => acc + rating?.rating, 0) /
+  //     artist?.ratings?.length || 0;
 
-  const openRatingModal = () => {
-    setIsRatingModalOpen(true);
-  };
-  const closeRatingModal = () => {
-    setIsRatingModalOpen(false);
-  };
+  // const openRatingModal = () => {
+  //   setIsRatingModalOpen(true);
+  // };
+  // const closeRatingModal = () => {
+  //   setIsRatingModalOpen(false);
+  // };
   const openModal = () => {
     setIsModalOpen(true);
   };
@@ -78,7 +78,8 @@ function ArtistHome() {
                 className="relative"
               >
                 <img
-                  src={`${BASE_URL}/artistProfile/${artist?.profile}`}
+                  // src={`${BASE_URL}/artistProfile/${artist?.profile}`}
+                  src={`http://localhost:5000/artistProfile/${artist?.profile}`}
                   className="shadow-xl rounded-full align-middle absolute -m-16 -ml-20 lg:-ml-16 max-w-[150px]  border-2 border-[#0d0a17]"
                   alt=""
                 />
@@ -108,12 +109,12 @@ function ArtistHome() {
               </div>
             </div>
           </div>
-          <span
+          {/* <span
             className="text-slate-500 cursor-pointer flex justify-center"
             onClick={openRatingModal}
           >
             Rating: <StarRating rating={averageRating} />
-          </span>
+          </span> */}
           <div className="text-center mt-2">
             <h3 className="uppercase text-2xl text-slate-500 font-bold leading-normal mb-1">
               {artist?.name}

@@ -177,7 +177,8 @@ const ArtistChatPage = () => {
                 >
                   <div className="w-12 h-12 bg-gray-300 rounded-full mr-3">
                     <img
-                      src={`${BASE_URL}/userProfile/${user.userId?.profile}`}
+                      // src={`${BASE_URL}/userProfile/${user.userId?.profile}`}
+                      src={`http://localhost:5000/userProfile/${user.userId?.profile}`}
                       alt={`Avatar of ${user.userId?.name}`}
                       className="w-12 h-12 rounded-full"
                     />
@@ -225,7 +226,8 @@ const ArtistChatPage = () => {
             {chatPartner ? (
               <>
                 <img
-                  src={`${BASE_URL}/userProfile/${chatPartner?.userId?.profile}`}
+                  // src={`${BASE_URL}/userProfile/${chatPartner?.userId?.profile}`}
+                  src={`http://localhost:5000/userProfile/${chatPartner?.userId?.profile}`}
                   alt={`Avatar of ${chatPartner?.userId?.name}`}
                   className="w-12 h-12 rounded-full mr-4"
                 />
@@ -271,8 +273,8 @@ const ArtistChatPage = () => {
                     <img
                       src={
                         isArtistChat
-                          ? `${BASE_URL}/artistProfile/${chatPartner?.artistId?.profile}`
-                          : `${BASE_URL}/userProfile/${chatPartner?.userId?.profile}`
+                          ? `http://localhost:5000/artistProfile/${chatPartner?.artistId?.profile}`
+                          : `http://localhost:5000/userProfile/${chatPartner?.userId?.profile}`
                       }
                       alt={`${message.sender}'s Avatar`}
                       className="w-8 h-8 rounded-full"

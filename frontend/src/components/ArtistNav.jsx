@@ -152,9 +152,9 @@ const ArtistNavbar = () => {
   const navigation = [
     { name: "Home", navigation: ServerVariables.ArtistHome },
     { name: "About", navigation: ServerVariables.aboutPage },
-    { name: "Plans", navigation: ServerVariables.plansAvailable },
+    // { name: "Plans", navigation: ServerVariables.plansAvailable },
     { name: "My Posts", navigation: ServerVariables.artistPosts },
-    { name: "Subscriptions", navigation: ServerVariables.mySubscriptions },
+    // { name: "Subscriptions", navigation: ServerVariables.mySubscriptions },
   ];
 
   const handleLogout = async () => {
@@ -262,7 +262,8 @@ const ArtistNavbar = () => {
                         <span className="sr-only">Open user menu</span>
                         <img
                           className="h-8 w-8 rounded-full"
-                          src={`${BASE_URL}/artistProfile/${artist.profile}`}
+                          // src={`${BASE_URL}/artistProfile/${artist.profile}`}
+                          src={`http://localhost:5000/artistProfile/${artist.profile}`}
                           alt=""
                         />
                       </Menu.Button>

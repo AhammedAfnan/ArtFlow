@@ -32,7 +32,7 @@ exports.resizeBannerImage = async (req,res,next) => {
         await sharp(req.file.buffer)
             .resize(1080,1080)
             .toFormat("jpeg")
-            .toFile(`public/userProfile/${req.file.filename}`)
+            .toFile(`public/banners/${req.file.filename}`)
         next()
     } catch (error) {
         res.json({error:"error in resizing image"})

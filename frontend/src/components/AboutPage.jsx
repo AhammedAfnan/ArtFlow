@@ -194,7 +194,7 @@ function AboutPage() {
             <span class="text-sm text-yellow-500 sm:text-center dark:text-yellow-500">
               © 2023{" "}
               <a href="https://flowbite.com/" class="hover:underline">
-                ArtHub™
+                ArtFlow™
               </a>
               . All Rights Reserved.
             </span>

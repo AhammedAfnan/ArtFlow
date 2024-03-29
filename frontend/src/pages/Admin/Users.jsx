@@ -9,7 +9,7 @@ import Swal from "sweetalert2";
 import DataTable from "react-data-table-component";
 import ReactPaginate from "react-paginate";
 import AdminNavbar from '../../components/AdminNavbar';
-import BASE_URL from '../../config/api'
+import BASE_URL  from '../../config/api'
 
 const Users = () => {
     const dispatch = useDispatch()
@@ -30,7 +30,7 @@ const Users = () => {
             selector:(row) =>(
                 <img
                 className='h-10 w-10 rounded-full' 
-                src={`${BASE_URL}/userProfile/${row?.profile}`}
+                src={`http://localhost:5000/userProfile/${row?.profile}`}
                 alt="image" 
                 />
             ),

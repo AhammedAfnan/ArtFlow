@@ -59,10 +59,11 @@ function UserProfile() {
         transition={{ duration: 0.5 }}
         className="bg-gray-100 font-sans min-h-screen w-full flex flex-row justify-center items-center"
       >
-        <div className="card w-96 h-96 mx-auto bg-gray-300 text-grey-800 shadow-xl hover:shadow">
+        <div className="card w-96 h-90 mx-auto bg-gray-300 text-grey-800 shadow-xl hover:shadow">
           <img
             className="w-36 mx-auto rounded-full -mt-20 border-2 border-gray-800 "
-            src={`${BASE_URL}/userProfile/${user?.profile}`}
+            // src={`${BASE_URL}/userProfile/${user?.profile}`}
+            src={`http://localhost:5000/userProfile/${user.profile}`}
             alt=""
           />
           <div className="uppercase text-center mt-2 text-3xl font-medium">

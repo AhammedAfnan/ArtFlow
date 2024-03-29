@@ -31,7 +31,8 @@ function Banners() {
       selector: (row) => (
         <img
           className="h-10 w-10 rounded-full"
-          src={`${BASE_URL}/banners/${row?.image}`}
+          // src={`${BASE_URL}/banners/${row?.image}`}
+          src={`http://localhost:5000/banners/${row?.image}`}
           alt="image"
         />
       ),

@@ -176,7 +176,8 @@ const ChatWithArtist = () => {
               >
                 <div className="w-12 h-12 bg-gray-300 rounded-full mr-3">
                   <img
-                    src={`${BASE_URL}/artistProfile/${artist.profile}`}
+                    // src={`${BASE_URL}/artistProfile/${artist.profile}`}
+                    src={`http://localhost:5000/userProfile/${artist.profile}`}
                     alt={`Avatar of ${artist.name}`}
                     className="w-12 h-12 rounded-full"
                   />
@@ -221,7 +222,8 @@ const ChatWithArtist = () => {
             {chatPartner ? (
               <>
                 <img
-                  src={`${BASE_URL}/artistProfile/${chatPartner?.artistId?.profile}`}
+                  // src={`${BASE_URL}/artistProfile/${chatPartner?.artistId?.profile}`}
+                  src={`http://localhost:5000/artistProfile/${chatPartner?.artistId?.profile}`}
                   alt={`Avatar of ${chatPartner?.artistId?.name}`}
                   className="w-12 h-12 rounded-full mr-4"
                 />
