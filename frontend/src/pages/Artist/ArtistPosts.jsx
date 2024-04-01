@@ -88,12 +88,12 @@ const PostCard = ({ post, onDelete }) => {
         style={customStyles}
       >
         {/* Use the CommentModal component */}
-        {/* <CommentModal
+        <CommentModal
           isOpen={isModalOpen}
           closeModal={closeModal}
           Comments={comments}
           post={post}
-        /> */}
+        />
       </Modal>
     </div>
   );

@@ -12,8 +12,8 @@ function UserVideoCallRoom() {
 
   useEffect(() => {
     const initZego = async () => {
-      const appID = 2072621261;
-      const serverSecret = "eaf046debc960028684c90c2d219cfe3";
+      const appID = 1622638410;
+      const serverSecret = "cd46070134cb244eb6f953a85a8a0dc7";
       const kitToken = ZegoUIKitPrebuilt.generateKitTokenForTest(
         appID,
         serverSecret,
@@ -68,7 +68,7 @@ function UserVideoCallRoom() {
 
     // Cleanup function
     return () => {
-      window.location.reload();
+      // window.location.reload();
     };
   }, [roomId, user?.name]);
 

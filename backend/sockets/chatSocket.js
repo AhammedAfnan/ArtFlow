@@ -40,7 +40,6 @@ function intializeSocket(server) {
     });
 
     socket.on("videoCallInvitation", (invitation) => {
-      console.log(invitation);
       // Emit the video call invitation event to the recipient
       if (invitation.artistId) {
         io.to(invitation.artistId).emit("videoCallInvitation", {
@@ -72,7 +71,7 @@ function intializeSocket(server) {
     });
 
     socket.on("disconnect", () => {
-      // console.log("socket disconnected");
+      console.log("socket disconnected");
     });
   });
 }

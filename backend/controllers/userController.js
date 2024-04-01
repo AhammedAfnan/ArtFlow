@@ -58,7 +58,7 @@ exports.register = catchAsync(async (req, res) => {
 
 exports.getCurrentUser = catchAsync(async (req, res) => {
   const currentUser = await User.findById(req.userId);
-  if (currentUser.isBlocked) {
+  if (currentUser?.isBlocked) {
     return res.json({ error: "You are blocked by admin", currentUser });
   }
   return res.status(200).json({ success: "ok" });
@@ -177,7 +177,7 @@ exports.updatePassword = catchAsync(async (req, res) => {
 
 exports.getAllFollowingsPosts = catchAsync(async (req, res) => {
   const currentUser = await User.findById(req.userId);
-  const followedArtists = currentUser.followings;
+  const followedArtists = currentUser?.followings;
   // Fetch posts from followed artists
   const artistPosts = await Post.find({ postedBy: { $in: followedArtists } })
     .sort({ createdAt: -1 })
@@ -563,4 +563,20 @@ exports.getComments = catchAsync(async (req, res) => {
   if (comments?.length) {
     res.status(200).json({ success: "ok", comments });
   }
+});
+
+exports.deleteComment = catchAsync(async (req, res) => {
+  const { postid, commentId } = req.body;
+  const post = await Post.findById(postid)
+    .populate({
+      path: "comments",
+      populate: {
+        path: "postedBy",
+        select: "name profile",
+      },
+    })
+    .populate("postedBy");
+  post.comments.pull(commentId);
+  await post.save();
+  return res.status(200).json({ success: true, post });
 });

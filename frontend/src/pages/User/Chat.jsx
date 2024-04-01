@@ -269,8 +269,8 @@ const ChatWithArtist = () => {
                     <img
                       src={
                         isUserChat
-                          ? `${BASE_URL}/userProfile/${chatPartner?.userId?.profile}`
-                          : `${BASE_URL}/artistProfile/${chatPartner?.artistId?.profile}`
+                          ? `http://localhost:5000/userProfile/${chatPartner?.userId?.profile}`
+                          : `http://localhost:5000/artistProfile/${chatPartner?.artistId?.profile}`
                       }
                       alt={`${message.sender}'s Avatar`}
                       className="w-8 h-8 rounded-full"

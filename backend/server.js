@@ -5,7 +5,6 @@ const userRoute = require('./routes/userRoutes')
 const adminRoutes = require("./routes/adminRoutes");
 const artistRoutes = require("./routes/artistRoutes");
 
-
 const {mongoConnect} = require('./config/db')
 require('dotenv').config()
 const app = express()
@@ -21,6 +20,9 @@ app.use(
 app.use(express.json())
 app.use(express.urlencoded({extended:true}))
 app.use(express.static(path.join(__dirname,'public')));
+
+// const { intializeSocket } = require("./sockets/chatSocket");
+const { intializeSocket } = require("./sockets/chatSocket")
 
 // user
 app.use('/api/user',userRoute)
@@ -38,3 +40,6 @@ const port = process.env.PORT || 8000;
 const server = http.listen(port,()=>{
     console.log(`Server is running on PORT:${port}`);
 })
+
+// intializeSocket(server);
+intializeSocket(server)

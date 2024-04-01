@@ -8,8 +8,8 @@ const express = require('express'),
 userRouter
     .post('/register',userController.register)
     .post("/verifyOtp", userController.verifyOtp)
-    .post("/verifyLogin", userController.verifyLogin)
     .post("/resendOtp", userController.ResendOtp)
+    .post("/verifyLogin", userController.verifyLogin)
     .post("/verifyEmail", userController.forgetVerifyEmail)
     .post("/updatePassword", userController.updatePassword)
     .get("/getAllFollowingPosts", userAuth, userController.getAllFollowingsPosts)
@@ -23,43 +23,51 @@ userRouter
       )
     .post("/likePost", userAuth, userController.likePost)
     .post("/unLikePost", userAuth, userController.unLikePost)
-    .get("/getCurrentUser", userAuth, userController.getCurrentUser)
-    .post("/getArtistFollowers", userAuth, userController.getArtistFollowers)
-    .get("/getAllBanners", userAuth, userController.getAllBanners)
-    .post("/getComments", userAuth, userController.getComments)
-    .get("/getAllArtists", userAuth, userController.getAllArtists)
-    .post("/getArtistAllposts", userAuth, userController.getArtistAllposts)
     .post("/followArtist", userAuth, userController.followArtist)
     .post("/unFollowArtist", userAuth, userController.unFollowArtist)
-    .get(
-        "/userNotificationsCount",
-        userAuth,
-        userController.getNotificationCount
-      )
-      .get("/getUserFollowings", userAuth, userController.getUserFollowings)
-      .post("/comment", userAuth, userController.comment)
-      //notifications
+    .post("/comment", userAuth, userController.comment)
+    .get("/getAllArtists", userAuth, userController.getAllArtists)
+    .post("/getArtistAllposts", userAuth, userController.getArtistAllposts)
+    .get("/getAllBanners", userAuth, userController.getAllBanners)
+    .post("/getComments", userAuth, userController.getComments)
+    .get("/getCurrentUser", userAuth, userController.getCurrentUser)
+    .post("/getArtistFollowers", userAuth, userController.getArtistFollowers)
+    .get("/getUserFollowings", userAuth, userController.getUserFollowings)
+    
+    // chat
+   .post("/getChatMessages", userAuth, chatController.getChatMessages)
+   .post("/sendNewMessage", userAuth, chatController.sendNewMessage)
+
+
+    //notifications
   .get(
     "/getUserAllNotifications",
     userAuth,
     userController.getUserNotifications
   )
-
-  .delete(
-    "/clearUserAllNotifications",
-    userAuth,
-    userController.clearAllNotification
-  )
-
   .delete(
     "/deleteUserNotification",
     userAuth,
     userController.deleteNotification
   )
 
-      // chat
-    .get("/getArtistsFollowed", userAuth, chatController.getArtistUserFollow)
-    .post("/getChatMessages", userAuth, chatController.getChatMessages)
-    .post("/sendNewMessage", userAuth, chatController.sendNewMessage)
-
+  .delete(
+    "/clearUserAllNotifications",
+    userAuth,
+    userController.clearAllNotification
+    )
+    
+  .get(
+        "/userNotificationsCount",
+        userAuth,
+        userController.getNotificationCount
+        )
+    
+  .post(
+      "/deleteComment",
+      userAuth,
+      userController.deleteComment 
+      )
+      
+  .get("/getArtistsFollowed", userAuth, chatController.getArtistUserFollow)
 module.exports = userRouter;

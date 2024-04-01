@@ -164,7 +164,8 @@ const UserNotification = () => {
                     </p>
                     {item?.relatedPostId ? (
                       <img
-                        src={`${BASE_URL}/artistPosts/${item?.relatedPostId?.image}`}
+                        // src={`${BASE_URL}/artistPosts/${item?.relatedPostId?.image}`}
+                        src={`http://localhost:5000/artistPosts/${item?.relatedPostId?.image}`}
                         className="w-10 h-10"
                         onClick={() => openModal(item?.relatedPostId)}
                         alt={item?.relatedPostId?.name}

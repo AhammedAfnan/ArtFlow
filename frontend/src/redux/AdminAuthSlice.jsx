@@ -12,7 +12,7 @@ const initialState = {
     message:'',
     admin:JSON.parse(localStorage.getItem("adminInfo")) || {},
     token:JSON.parse(localStorage.getItem("adminToken")) || null,
-    role:'admin'   // idendin n arnjitta
+    role:'admin' 
 }
 
 export const AdminAuthSlice = createSlice({

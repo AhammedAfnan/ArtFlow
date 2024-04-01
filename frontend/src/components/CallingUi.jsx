@@ -35,13 +35,15 @@ const CallingUi = ({ isOpen, closeModal, sender, link }) => {
           >
             {sender.field ? (
               <img
-                src={`${BASE_URL}/artistProfile/${sender?.profile}`}
+                // src={`${BASE_URL}/artistProfile/${sender?.profile}`}
+                src={`http://localhost:5000/artistProfile/${sender?.profile}`}
                 className="w-full h-full object-cover rounded-3xl border-2 border-white"
                 alt=""
               />
             ) : (
               <img
-                src={`${BASE_URL}/userProfile/${sender?.profile}`}
+                // src={`${BASE_URL}/userProfile/${sender?.profile}`}
+                src={`http://localhost:5000/userProfile/${sender?.profile}`}
                 className="w-full h-full object-cover rounded-3xl border-2 border-white"
                 alt=""
               />
@@ -58,9 +60,9 @@ const CallingUi = ({ isOpen, closeModal, sender, link }) => {
                 stroke="currentColor"
               >
                 <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  stroke-width="2"
+                  strokeLineCap="round"
+                  strokeLineJoin="round"
+                  strokeWidth="2"
                   d="M15 19l-7-7 7-7"
                 />
               </svg>

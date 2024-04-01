@@ -2,15 +2,13 @@ require('dotenv').config()
 const catchAsync = require("../util/catchAsync"),
     bcrypt = require("bcrypt"),
     jwt = require("jsonwebtoken"),
-    Admin = require("../models/admin/adminModel"),
     User = require("../models/user/userModel"),
+    Admin = require("../models/admin/adminModel"),
     Category = require('../models/admin/categoryModel'),
     PlansHistory = require("../models/admin/subscriptionHistoryModel"),
     Plan = require("../models/admin/planModel"),
     Artist = require('../models/artist/artistModel'),
     Banner = require("../models/admin/BannerModel");
-
-
 
 exports.verifyAdmin = catchAsync(async(req,res)=>{
     const { email, password} = req.body;
@@ -367,6 +365,23 @@ exports.deleteBanner = catchAsync(async (req, res) => {
       .json({ success: `${banner.title} banner has listed` });
   }
   return res.json({ error: "error in updating" });
+});
+
+exports.updateBanner = catchAsync(async (req, res) => {
+  const { title, description, bannerImage, bannerId } = req.body;
+  const updatedBanner = await Banner.findByIdAndUpdate(bannerId, {
+    $set: {
+      title,
+      description,
+      image: bannerImage,
+    },
+  });
+  if (updatedBanner) {
+    return res
+      .status(200)
+      .json({ success: `${title} banner updated successfully` });
+  }
+  return res.status(200).json({ error: "failed in updating banner" });
 });
 
 

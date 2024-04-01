@@ -3,7 +3,6 @@ const express = require("express"),
    artistController = require("../controllers/artistController"),
    artistAuthMiddleware = require("../middlewares/Auth/artistAuth"),
    upload = require("../middlewares/imageUpload/cropImage"),
-   PlanExpired = require("../middlewares/artistPlanExpiryCheck"),
    chatController = require("../controllers/chatController")
 
 
@@ -13,6 +12,8 @@ artistRouter
     .post('/artistOtp',artistController.verifyOtp)
     .post('/artistResendOtp',artistController.ResendOtp)
     .post('/artistVerifyLogin',artistController.verifyLogin)
+    .post("/artistVerifyEmail", artistController.forgetVerifyEmail)
+    .post("/artistUpdatePassword", artistController.updatePassword)
     .get(
       "/getPlansAvailable",
       artistAuthMiddleware,
@@ -72,6 +73,18 @@ artistRouter
     artistController.getArtistNotifications
   )
 
+  .delete(
+    "/deleteNotification",
+    artistAuthMiddleware,
+    artistController.deleteNotification
+  )
+
+  .delete(
+    "/clearArtistAllNotifications",
+    artistAuthMiddleware,
+    artistController.clearAllNotification
+  )
+
   .get(
     "/getMySubscriptions",
     artistAuthMiddleware,
@@ -94,6 +107,13 @@ artistRouter
     artistAuthMiddleware,
     artistController.getArtistBanners
   )
+
+  .post(
+    "/replyUserComment",
+    artistAuthMiddleware,
+    artistController.replyUserComment
+  )
+  .post("/deleteReply", artistAuthMiddleware, artistController.deleteReply)
 
   //chat
   .get(

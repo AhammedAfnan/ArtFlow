@@ -75,7 +75,7 @@ exports.register = catchAsync(async(req,res)=>{
         const options = {
             from:process.env.Email,
             to:email,
-            subject:"Arthub register verification OTP",
+            subject:"ArtFlow register verification OTP",
             html:otpTemplate(newOtp),
         };
         await Mail.sendMail(options);
@@ -119,7 +119,7 @@ exports.ResendOtp = catchAsync(async (req, res) => {
     const options = {
       from: process.env.EMAIL,
       to: req.body.email,
-      subject: "ArtHub verification otp",
+      subject:"ArtFlow verification otp",
       html: otpTemplate(newOtp),
     };
     await Mail.sendMail(options)
@@ -158,6 +158,42 @@ exports.ResendOtp = catchAsync(async (req, res) => {
       expiresIn: "7d",
     });
     return res.status(200).json({ success: "Login Successfull", token, artist });
+  });
+
+  exports.forgetVerifyEmail = catchAsync(async (req, res) => {
+    const { email } = req.body;
+    const artist = await Artist.findOne({ email: email });
+    const newOtp = randomString.generate({
+      length: 4,
+      charset: "numeric",
+    });
+    if (artist) {
+      const options = {
+        from: process.env.EMAIL,
+        to: email,
+        subject: "ArtFlow Email verification OTP for forget password",
+        html: otpTemplate(newOtp),
+      };
+      await Mail.sendMail(options);
+      await Artist.findOneAndUpdate(
+        { email: email },
+        { $set: { otp: { code: newOtp, generatedAt: Date.now() } } },
+        { new: true }
+      );
+      return res.status(200).json({ success: "otp sended to your Email", email });
+    }
+  });
+
+  exports.updatePassword = catchAsync(async (req, res) => {
+    const { email, password } = req.body;
+    const artist = await Artist.findOne({ email: email });
+    const hashPassword = await bcrypt.hash(password, 10);
+    if (artist) {
+      artist.password = hashPassword;
+      await artist.save();
+      return res.status(200).json({ success: "password changed successfully" });
+    }
+    return res.status(200).json({ error: "password changing failed" });
   });
   
 
@@ -480,6 +516,29 @@ exports.ResendOtp = catchAsync(async (req, res) => {
     return res.status(200).json({ success: true, count, messagesCount });
   });
 
+  exports.deleteNotification = catchAsync(async (req, res) => {
+    const id = req.body?.notificationId;
+    const deletedNotification = await Notification.findOneAndDelete({ _id: id });
+    if (deletedNotification) {
+      return res
+        .status(200)
+        .json({ success: "deleted notification successfully" });
+    }
+    return res.json({ error: "deleting notification failed" });
+  });
+
+  exports.clearAllNotification = catchAsync(async (req, res) => {
+    const id = req.artistId;
+    const clearNotifications = await Notification.deleteMany({
+      receiverId: id,
+      seen: true,
+    });
+    if (clearNotifications) {
+      return res.status(200).json({ success: "All notifications cleared" });
+    }
+    return res.json({ error: "deleting notification failed" });
+  });
+
   exports.getArtistNotifications = catchAsync(async (req, res) => {
     const Id = req.artistId;
     // console.log('Id is :',Id);
@@ -505,5 +564,62 @@ exports.ResendOtp = catchAsync(async (req, res) => {
         ],
       });
     return res.status(200).json({ notifications, success: true });
+  });
+  
+  exports.replyUserComment = catchAsync(async (req, res) => {
+    const { postId, commentId, reply } = req.body;
+    const artist = await Artist.findById(req.artistId);
+    const post = await Post.findById(postId)
+      .populate({
+        path: "comments",
+        populate: {
+          path: "postedBy",
+          select: "name profile",
+        },
+      })
+      .populate("postedBy");
+    const comment = post.comments.id(commentId);
+    comment.replies.push({
+      reply: reply,
+      postedBy: artist._id,
+    });
+  
+    await post.save();
+    // to send notification to user
+    const Notify = {
+      receiverId: comment.postedBy._id,
+      senderId: req.artistId,
+      relatedPostId: post._id,
+      notificationMessage: `${artist.name} replied '${reply}' to your comment '${comment.text}'`,
+      date: new Date(),
+    };
+    const newNotification = new Notification(Notify);
+    newNotification.save();
+    return res
+      .status(200)
+      .json({ success: "reply added", comments: post.comments });
+  });
+  
+  exports.deleteReply = catchAsync(async (req, res) => {
+    const { replyId, postId, commentId } = req.body;
+    const post = await Post.findById(postId)
+      .populate({
+        path: "comments",
+        populate: {
+          path: "postedBy",
+          select: "name profile",
+        },
+      })
+      .populate("postedBy");
+  
+    const comment = post.comments.id(commentId);
+    comment.replies.pull(replyId);
+    await post.save();
+  
+    return res.status(200).json({
+      success: "reply deleted",
+      post: post,
+      reply: comment.replies.id(replyId),
+    });
   });
   

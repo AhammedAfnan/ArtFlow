@@ -37,6 +37,13 @@ adminRouter
   adminController.addBanner)
   .post("/deleteBanner",adminAuthMiddleware,adminController.deleteBanner)
 
+  .post(
+    "/updateBanner",
+    adminAuthMiddleware,
+    uploadBanner.uploadBannerImage,
+    uploadBanner.resizeBannerImage,
+    adminController.updateBanner
+  )
    //subscription history
    .get(
     "/getSubscriptionHistory",
